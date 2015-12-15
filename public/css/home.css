@@ -1,0 +1,135 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	background-image: url('../img/background/home-bg.jpg');
+	background-position: left top;
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+body {
+	/* Margin bottom by footer height */
+	margin-bottom: 60px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	/* Set the fixed height of the footer here */
+	height: 30px;
+}
+
+p.gutter {
+	margin-top: 50px;
+}
+
+p.logo {
+	text-align: center;
+	color: #F0E68C;
+	font-size: 4em;
+	font-family: Raleway;
+}
+
+p.logo span {
+	margin-left: -5px;
+}
+
+footer p {
+	color: #F0E68C;
+	font-family: Raleway, sans-serif;
+	font-size: 13px;
+}
+
+footer p a {
+	color: #F0E68C;
+	font-family: sans-serif;
+}
+
+footer p a:hover {
+	color: #F0E68C;
+}
+
+footer p a:visited {
+	color: #F0E68C;
+}
+
+h2#desc {
+	color: #F0E68C;
+	font-family: Scripti;
+	line-height: 1em;
+	margin-top: 50px;
+	font-size: 4.5em;
+}
+
+h2#desc span.scratchpad {
+	color: #55f047;
+	font-family: UVNKeChuyen;
+	font-size: 0.8em;
+}
+
+.reglog {
+	margin: auto;
+	margin-top: 30px;
+	font-size: 10px;
+}
+
+.reglog button {
+	margin-top: 5px;
+	width: 100%;
+}
+
+.reglog input {
+	font-size: 13px;
+}
+
+.reglog input[type=password] {
+	margin-top: 5px;
+}
+
+.typed-cursor {
+	opacity: 1;
+	-webkit-animation: blink 0.7s infinite;
+	-moz-animation: blink 0.7s infinite;
+	animation: blink 0.7s infinite;
+	color: #cff03d;
+}
+
+@keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

@@ -6,16 +6,41 @@ var express = require('express');
 var config = require('./config');
 var log = require('./log');
 var path = require('path');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var mongoose = require('mongoose');
+var MongoStore = require('connect-mongo')(session);
+var passport = require('passport');
 
 exports.init = function () {
-	"use strict";
-	log.message('Starting server...');
+	log.message('[INIT-express] ', 'Starting server...');
 
 	var app = express();
+	if (config.debug) {
+		app.use(require('morgan')('dev', {
+			skip: function (req, res) {
+				return req.url.indexOf('/api') == -1;
+			}
+		}));
+	}
+	//app.use(bodyParser.urlencoded({extended: true}));
+	app.use(bodyParser.json());
+
+	app.use(session({
+		secret: config.express.sessionSecret,
+		store: new MongoStore({
+			mongooseConnection: mongoose.connection,
+			ttl: config.express.sessionTTL
+		}),
+		resave: false,
+		saveUninitialized: false
+	}));
+	app.use(passport.initialize());
+	app.use(passport.session());
 
 	app.use(express.static(path.join(process.cwd(), '/public'), config.express.static));
 
 	app.listen(config.express.port, config.express.ip, function () {
-		log.message('Server is listening on ', config.express.ip, ':', config.express.port);
+		log.message('[INIT-express] ', 'Server is listening on ', config.express.ip, ':', config.express.port);
 	});
 }

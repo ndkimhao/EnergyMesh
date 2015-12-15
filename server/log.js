@@ -7,7 +7,6 @@ var colors = require('colors/safe');
 var _ = require('lodash');
 
 exports = log = module.exports = function (msg) {
-	"use strict";
 	if (config.debug) {
 		console.log(msg);
 	}
@@ -16,16 +15,22 @@ exports = log = module.exports = function (msg) {
 exports.c = colors;
 
 exports.d = exports.debug = function () {
-	"use strict";
 	log(colors.debug(_.toArray(arguments).join('')));
 };
 
 exports.i = exports.info = function () {
-	"use strict";
 	log(colors.info(_.toArray(arguments).join('')));
 };
 
 exports.m = exports.message = function () {
-	"use strict";
 	log(colors.message(_.toArray(arguments).join('')));
+};
+
+exports.e = exports.error = function () {
+	log(colors.error(_.toArray(arguments).join('')));
+};
+
+exports.ce = exports.criticalError = function () {
+	log(colors.criticalError(_.toArray(arguments).join('')));
+	process.exit(1);
 };
