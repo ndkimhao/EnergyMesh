@@ -2,3 +2,18 @@
 	font-family: Raleway;
 	src: url('./fonts/raleway/raleway_thin-webfont.woff');
 }
+
+@font-face {
+	font-family: Scripti;
+	src: url('./fonts/scripti/scripti.woff');
+}
+
+@font-face {
+	font-family: UVNKeChuyen;
+	src: url('./fonts/UVNKeChuyen/UVNKeChuyen.woff');
+}
+
+.col-centered {
+	float: none;
+	margin: 0 auto;
+}
