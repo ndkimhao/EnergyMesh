@@ -1,0 +1,15 @@
+{
+  "name": "EnergyMeshApp",
+  "version": "1.0.0",
+  "description": "Energy Mesh app",
+  "main": "index.js",
+  "author": "Nguyen Duong Kim Hao",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "colors": "^1.1.2",
+    "dotenv": "^1.2.0",
+    "express": "^4.13.3",
+    "lodash": "^3.10.1"
+  }
+}
