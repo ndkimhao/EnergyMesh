@@ -7,10 +7,13 @@ var log = require('./log');
 var express = require('./express');
 var db = require('./db');
 var model = require('./model');
+var passport = require('./passport');
 
 exports.start = function () {
 	config.init();
+	log.message('[INIT] ', 'Starting server...');
 	db.init();
 	model.init();
+	passport.init();
 	express.init();
 }

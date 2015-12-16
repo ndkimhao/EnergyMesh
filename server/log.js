@@ -6,9 +6,9 @@ var config = require('./config');
 var colors = require('colors/safe');
 var _ = require('lodash');
 
-exports = log = module.exports = function (msg) {
+exports = log = module.exports = function () {
 	if (config.debug) {
-		console.log(msg);
+		console.log(_.toArray(arguments).join(''));
 	}
 };
 

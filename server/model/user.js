@@ -31,6 +31,14 @@ var userSchema = exports.userSchema = new Schema({
 
 });
 
+userSchema.virtual('clientData').get(function () {
+	return {
+		id: this._id,
+		username: this.username,
+		lastLogin: this.lastLogin
+	}
+});
+
 exports.init = function () {
 	mongoose.model('User', userSchema);
 }

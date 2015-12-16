@@ -11,10 +11,10 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
+var controller = require('./controller');
+var serveStatic = require('./serve-static');
 
 exports.init = function () {
-	log.message('[INIT-express] ', 'Starting server...');
-
 	var app = express();
 	if (config.debug) {
 		app.use(require('morgan')('dev', {
@@ -38,7 +38,12 @@ exports.init = function () {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	app.use(express.static(path.join(process.cwd(), '/public'), config.express.static));
+	controller.init(app);
+	app.use(serveStatic(path.join(process.cwd(), '/public'), config.express.static));
+	/*app.get('/*', function (req, res) {
+	 if (req.url.indexOf('/api/') == -1)
+	 res.sendFile(path.join(process.cwd(), '/public/index.html'));
+	 });*/
 
 	app.listen(config.express.port, config.express.ip, function () {
 		log.message('[INIT-express] ', 'Server is listening on ', config.express.ip, ':', config.express.port);

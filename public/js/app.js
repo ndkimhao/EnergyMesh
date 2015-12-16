@@ -3,7 +3,7 @@
  */
 
 var app = angular.module('energyMeshApp',
-	['ui.router', 'angular-loading-bar', 'ui.bootstrap']);
+		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies']);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
 	"use strict";
@@ -16,6 +16,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 			url: '/',
 			templateUrl: './views/home.html',
 			controller: 'HomeCtrl'
+		})
+			.state('dashboard', {
+				url: '/dashboard',
+				templateUrl: './views/dashboard.html',
+				controller: 'DashboardCtrl'
 		});
+
 	$locationProvider.html5Mode(true);
 });

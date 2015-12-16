@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 
 exports.init = function () {
 	require('./user').init();
+
 	Object.assign(module.exports, {
 		User: mongoose.model('User')
 	});
