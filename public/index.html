@@ -12,12 +12,14 @@
 	<meta name="description" content="Energy Mesh App">
 	<meta name="author" content="Nguyen Duong Kim Hao">
 
-	<link rel="shortcut icon" href="/favicon.ico" type="image/ico"/>
+	<link rel="shortcut icon" href="favicon.ico" type="image/ico"/>
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="lib/sweetalert/dist/sweetalert.css">
 	<link rel="stylesheet" type="text/css" href="lib/angular-loading-bar/build/loading-bar.min.css">
 	<link rel="stylesheet" type="text/css" href="lib/angular-bootstrap/ui-bootstrap-csp.css">
 	<link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.min.css">
+
+	<link rel="stylesheet" type="text/css" href="css/dashboard/animate.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 	<script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
@@ -30,12 +32,20 @@
 	<script type="text/javascript" src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script type="text/javascript" src="lib/angular-cookies/angular-cookies.min.js"></script>
 
+	<script type="text/javascript" src="lib/amcharts/dist/amcharts/amcharts.js"></script>
+	<script type="text/javascript" src="lib/amcharts/dist/amcharts/serial.js"></script>
+	<script type="text/javascript" src="lib/amcharts-angular/dist/amChartsDirective.js"></script>
+
+	<script type="text/javascript" src="lib/metisMenu/dist/metisMenu.min.js"></script>
+	<script type="text/javascript" src="lib/slimscroll/jquery.slimscroll.min.js"></script>
+	<script type="text/javascript" src="api/realtime/socket/socket.io.js"></script>
+
 	<script type="text/javascript" src="js/app.js"></script>
-	<script type="text/javascript" src="js/controllers/home.js"></script>
-	<script type="text/javascript" src="js/service/user.js"></script>
-	<script type="text/javascript" src="js/controllers/dashboard.js"></script>
+	<script type="text/javascript" src="js/directives.js"></script>
+	<script type="text/javascript" src="js/controller/index.js"></script>
+	<script type="text/javascript" src="js/controller/dashboard.js"></script>
 </head>
 <body>
-<div class="container-fluid" ui-view></div>
+<div class="container-fluid no-padding" ui-view></div>
 </body>
 </html>

@@ -1,0 +1,14 @@
+.no-padding {
+	padding: 0;
+}
+
+.navbar-info-custom {
+	display: inline-table;
+	margin: 12px 5px 5px 10px;
+	width: calc(100% - 200px);
+}
+
+.btn-center {
+	display: table;
+	margin: 0 auto;
+}

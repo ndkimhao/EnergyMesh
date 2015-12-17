@@ -1,5 +1,74 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en");
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
+/* open-sans-300 - latin_vietnamese_cyrillic_latin-ext */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Open Sans Light'), local('OpenSans-Light'),
+	url('fonts/open-sans/open-sans-v13-latin_vietnamese_cyrillic_latin-ext-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */ url('fonts/open-sans/open-sans-v13-latin_vietnamese_cyrillic_latin-ext-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* open-sans-regular - latin_vietnamese_cyrillic_latin-ext */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Open Sans'), local('OpenSans'),
+	url('fonts/open-sans/open-sans-v13-latin_vietnamese_cyrillic_latin-ext-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */ url('fonts/open-sans/open-sans-v13-latin_vietnamese_cyrillic_latin-ext-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* open-sans-600 - latin_vietnamese_cyrillic_latin-ext */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 600;
+	src: local('Open Sans Semibold'), local('OpenSans-Semibold'),
+	url('fonts/open-sans/open-sans-v13-latin_vietnamese_cyrillic_latin-ext-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */ url('fonts/open-sans/open-sans-v13-latin_vietnamese_cyrillic_latin-ext-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* open-sans-700 - latin_vietnamese_cyrillic_latin-ext */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'),
+	url('fonts/open-sans/open-sans-v13-latin_vietnamese_cyrillic_latin-ext-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */ url('fonts/open-sans/open-sans-v13-latin_vietnamese_cyrillic_latin-ext-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* roboto-300 - latin_vietnamese_cyrillic_latin-ext */
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Roboto Light'), local('Roboto-Light'),
+	url('fonts/roboto/roboto-v15-latin_vietnamese_cyrillic_latin-ext-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */ url('fonts/roboto/roboto-v15-latin_vietnamese_cyrillic_latin-ext-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* roboto-regular - latin_vietnamese_cyrillic_latin-ext */
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Roboto'), local('Roboto-Regular'),
+	url('fonts/roboto/roboto-v15-latin_vietnamese_cyrillic_latin-ext-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */ url('fonts/roboto/roboto-v15-latin_vietnamese_cyrillic_latin-ext-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* roboto-500 - latin_vietnamese_cyrillic_latin-ext */
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 500;
+	src: local('Roboto Medium'), local('Roboto-Medium'),
+	url('fonts/roboto/roboto-v15-latin_vietnamese_cyrillic_latin-ext-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */ url('fonts/roboto/roboto-v15-latin_vietnamese_cyrillic_latin-ext-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* roboto-700 - latin_vietnamese_cyrillic_latin-ext */
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Roboto Bold'), local('Roboto-Bold'),
+	url('fonts/roboto/roboto-v15-latin_vietnamese_cyrillic_latin-ext-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */ url('fonts/roboto/roboto-v15-latin_vietnamese_cyrillic_latin-ext-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
 
 /*
  *
@@ -199,7 +268,7 @@ h5 {
 
 .nav-header {
 	padding: 33px 25px;
-	background: url("patterns/header-profile.png") no-repeat;
+	background: url("pattern/header-profile.png") no-repeat;
 }
 
 .pace-done .nav-header {
@@ -3882,7 +3951,7 @@ body.full-height-layout #page-wrapper {
 }
 
 body.boxed-layout {
-	background: url('patterns/shattered.png');
+	background: url('pattern/shattered.png');
 }
 
 body.boxed-layout #wrapper {
@@ -8763,7 +8832,7 @@ body.rtls.top-navigation .footer.fixed {
 
 .blue-skin {
 	font-weight: 600;
-	background: url("patterns/header-profile-skin-1.png") repeat scroll 0 0;
+	background: url("pattern/header-profile-skin-1.png") repeat scroll 0 0;
 }
 
 .blue-skin:hover {
@@ -8772,7 +8841,7 @@ body.rtls.top-navigation .footer.fixed {
 
 .yellow-skin {
 	font-weight: 600;
-	background: url("patterns/header-profile-skin-3.png") repeat scroll 0 100%;
+	background: url("pattern/header-profile-skin-3.png") repeat scroll 0 100%;
 }
 
 .yellow-skin:hover {
@@ -8781,7 +8850,7 @@ body.rtls.top-navigation .footer.fixed {
 
 .ultra-skin {
 	font-weight: 600;
-	background: url("patterns/header-profile-skin-2.png") repeat scroll 0 0;
+	background: url("pattern/header-profile-skin-2.png") repeat scroll 0 0;
 }
 
 .ultra-skin:hover {
@@ -8812,7 +8881,7 @@ body.rtls.top-navigation .footer.fixed {
 
 .skin-1 .nav-header {
 	background: #0e9aef;
-	background: url('patterns/header-profile-skin-1.png');
+	background: url('pattern/header-profile-skin-1.png');
 }
 
 .skin-1.mini-navbar .nav-second-level {
@@ -8944,7 +9013,7 @@ body.skin-2 {
 
 .skin-2 .nav-header {
 	background: #23c6c8;
-	background: url('patterns/header-profile-skin-2.png');
+	background: url('pattern/header-profile-skin-2.png');
 }
 
 .skin-2.mini-navbar .nav-second-level {
@@ -9134,7 +9203,7 @@ body.boxed-layout.skin-3 #wrapper {
 
 .skin-3 .nav-header {
 	background: #ecba52;
-	background: url('patterns/header-profile-skin-3.png');
+	background: url('pattern/header-profile-skin-3.png');
 }
 
 .skin-3.mini-navbar .nav-second-level {
@@ -9248,7 +9317,7 @@ body.md-skin {
 }
 
 .md-skin .nav-header {
-	background: url("patterns/4.png") no-repeat;
+	background: url("pattern/4.png") no-repeat;
 }
 
 .md-skin .label,

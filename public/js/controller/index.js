@@ -2,7 +2,7 @@
  * Created by Nguyen Duong Kim Hao on 14/12/2015.
  */
 
-app.controller('HomeCtrl', function ($scope, $cookies, $location, UserSvc) {
+app.controller('HomeCtrl', function ($scope, $cookies, $location, $http) {
 	$scope.alerts = {
 		success: {
 			text: '',
@@ -90,7 +90,7 @@ app.controller('HomeCtrl', function ($scope, $cookies, $location, UserSvc) {
 		if (!validate()) {
 			return;
 		}
-		UserSvc.login($scope.user)
+		$http.post('/api/user/login', $scope.user)
 				.success(function (data, status) {
 					if (status == 200) {
 						$cookies.put('user', JSON.stringify(data));

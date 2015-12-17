@@ -13,7 +13,7 @@ body {
 
 body {
 	/* Margin bottom by footer height */
-	margin-bottom: 60px;
+	margin-bottom: 40px;
 }
 
 .footer {
@@ -61,7 +61,7 @@ h2#desc {
 	color: #F0E68C;
 	font-family: Scripti;
 	line-height: 1em;
-	margin-top: 50px;
+	margin-top: 40px;
 	font-size: 4.5em;
 }
 
@@ -73,7 +73,7 @@ h2#desc span.scratchpad {
 
 .reglog {
 	margin: auto;
-	margin-top: 30px;
+	margin-top: 15px;
 }
 
 .reglog button {

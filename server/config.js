@@ -18,6 +18,7 @@ exports.init = function () {
 		debug: ['blue', 'bold'],
 		error: 'red',
 		message: ['black', 'bold'],
+		trace: 'black',
 		criticalError: ['red', 'bold', 'underline']
 	});
 	dotenv.load();

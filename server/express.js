@@ -19,7 +19,7 @@ exports.init = function () {
 	if (config.debug) {
 		app.use(require('morgan')('dev', {
 			skip: function (req, res) {
-				return req.url.indexOf('/api') == -1;
+				return req.originalUrl.indexOf('/api/') == -1;
 			}
 		}));
 	}
@@ -45,7 +45,7 @@ exports.init = function () {
 	 res.sendFile(path.join(process.cwd(), '/public/index.html'));
 	 });*/
 
-	app.listen(config.express.port, config.express.ip, function () {
+	exports.server = app.listen(config.express.port, config.express.ip, function () {
 		log.message('[INIT-express] ', 'Server is listening on ', config.express.ip, ':', config.express.port);
 	});
 }

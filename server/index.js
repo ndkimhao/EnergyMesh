@@ -8,6 +8,7 @@ var express = require('./express');
 var db = require('./db');
 var model = require('./model');
 var passport = require('./passport');
+var socket = require('./socket');
 
 exports.start = function () {
 	config.init();
@@ -16,4 +17,5 @@ exports.start = function () {
 	model.init();
 	passport.init();
 	express.init();
+	socket.init();
 }
