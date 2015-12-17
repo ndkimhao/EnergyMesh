@@ -12,3 +12,7 @@
 	display: table;
 	margin: 0 auto;
 }
+
+#page-wrapper {
+	min-height: 100vh;
+}
