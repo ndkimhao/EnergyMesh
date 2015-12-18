@@ -3,7 +3,7 @@
  */
 
 app = angular.module('energyMeshApp',
-		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies']);
+		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies', 'highcharts-ng']);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
 	"use strict";
