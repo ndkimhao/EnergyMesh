@@ -17,7 +17,10 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $q)
 					load: function () {
 						var chart = this;
 						var f;
+						var myInterval =
 						setInterval(f = function () {
+							if (!chart.series) return clearInterval(myInterval);
+							console.log('interval')
 							var x = (new Date()).getTime(), // current time
 									y = Math.round(Math.random() * 100);
 							chart.series[0].addPoint([x, Math.random() < 0.1 ? null : y], false, true);

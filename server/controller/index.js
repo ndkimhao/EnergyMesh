@@ -16,5 +16,7 @@ var notFound = function (req, res, next) {
 exports.init = function (app) {
 	app.use('/api/', checkUser);
 	app.use('/api/user/', require('./user'));
+	app.use('/api/realtime/', require('./realtime'));
+	app.use('/api/category/', require('./category'));
 	app.use('/api/', notFound);
 }

@@ -6,8 +6,10 @@ var mongoose = require('mongoose');
 
 exports.init = function () {
 	require('./user').init();
+	require('./category').init();
 
 	Object.assign(module.exports, {
-		User: mongoose.model('User')
+		User: mongoose.model('User'),
+		Category: mongoose.model('Category')
 	});
-}
+};

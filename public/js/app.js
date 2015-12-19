@@ -27,12 +27,14 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 			.state('dashboard.main', {
 				url: '/main',
 				templateUrl: './views/dashboard/main.html',
-				controller: 'Dashboard.MainCtrl'
+				controller: 'Dashboard.MainCtrl',
+				data: {pageTitle: 'Dashboard'}
 			})
-			.state('dashboard.userDetail', {
-				url: '/userDetail',
-				templateUrl: './views/dashboard/userDetail.html',
-				//controller: 'DashboardCtrl'
+			.state('dashboard.device', {
+				url: '/devices',
+				templateUrl: './views/dashboard/device.html',
+				controller: 'Dashboard.DeviceCtrl',
+				data: {pageTitle: 'Thiết bị'}
 		});
 	$urlRouterProvider.when('/dashboard', '/dashboard/main');
 

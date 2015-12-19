@@ -95,3 +95,8 @@ exports.ce = exports.criticalError = function () {
 	_log(colors.criticalError, arguments);
 	process.exit(1);
 };
+
+exports.h = exports.handle = function (err, data) {
+	if (err) _log(colors.error, [err]);
+	else _log(colors.debug, [data]);
+};

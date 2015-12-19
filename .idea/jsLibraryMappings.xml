@@ -4,6 +4,6 @@
     <file url="file://$PROJECT_DIR$" libraries="{EnergyMesh node_modules}" />
     <file url="file://$PROJECT_DIR$/public" libraries="{ECMAScript 6, HTML, HTML5 / EcmaScript 5, angular2-DefinitelyTyped, bootstrap-DefinitelyTyped}" />
     <file url="file://$PROJECT_DIR$/server" libraries="{colors-DefinitelyTyped, mongoose-DefinitelyTyped}" />
-    <excludedPredefinedLibrary name="HTML" />
+    <includedPredefinedLibrary name="ECMAScript 6" />
   </component>
 </project>
