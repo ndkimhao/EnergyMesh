@@ -29,3 +29,55 @@
 	width: 100%;
 	height: 100%;
 }
+
+.col-all-1, .col-all-2, .col-all-3, .col-all-4, .col-all-5, .col-all-6, .col-all-7, .col-all-8, .col-all-9, .col-all-10, .col-all-11, .col-all-12 {
+	float: left;
+}
+
+.col-all-12 {
+	width: 100%;
+}
+
+.col-all-11 {
+	width: 91.66666667%;
+}
+
+.col-all-10 {
+	width: 83.33333333%;
+}
+
+.col-all-9 {
+	width: 75%;
+}
+
+.col-all-8 {
+	width: 66.66666667%;
+}
+
+.col-all-7 {
+	width: 58.33333333%;
+}
+
+.col-all-6 {
+	width: 50%;
+}
+
+.col-all-5 {
+	width: 41.66666667%;
+}
+
+.col-all-4 {
+	width: 33.33333333%;
+}
+
+.col-all-3 {
+	width: 25%;
+}
+
+.col-all-2 {
+	width: 16.66666667%;
+}
+
+.col-all-1 {
+	width: 8.33333333%;
+}

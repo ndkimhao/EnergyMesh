@@ -2,10 +2,91 @@
  * Created by Nguyen Duong Kim Hao on 18/12/2015.
  */
 
-app.controller('Dashboard.DeviceCtrl', function ($rootScope, $scope, $http, $em, Upload, $timeout) {
-	/*if(!$rootScope.categoryData) {
-	 $rootScope.loadCategory();
-	 }
-	 $scope.categoryData = $rootScope.categoryData;
-	 console.log($rootScope.categoryData);*/
+app.controller('Dashboard.DeviceCtrl', function ($rootScope, $scope, $http, $em,
+                                                 Upload, $timeout, $categorySvc, $deviceSvc) {
+	$scope.clearNewDev = function () {
+		$scope.devNew = {
+			name: '',
+			category: $scope.categoryData[0]
+		};
+	};
+
+	async.parallel([
+		function (callback) {
+			$categorySvc.firstLoad(function () {
+				$scope.categoryData = $categorySvc.data;
+				callback();
+			});
+		},
+		function (callback) {
+			$deviceSvc.firstLoad(function () {
+				$scope.deviceData = $deviceSvc.data;
+				callback();
+			});
+		}
+	], function () {
+		$.each($scope.deviceData, function (idx, dev) {
+			dev.category = dev.$new.category = $scope.categoryData.find(function (cat) {
+				return cat.id == dev.category.id;
+			});
+		});
+		$scope.clearNewDev();
+	});
+
+	$scope.isChanged = function (dev) {
+		return !angular.equals(dev, dev.$new);
+	};
+
+	$scope.categoryChange = function (dev, cat) {
+		dev.category = cat;
+	};
+
+	$scope.clear = function (dev) {
+		dev.$new = $.extend({}, dev);
+	};
+
+	$scope.update = function (dev) {
+		if (dev.$new.name == '') {
+			$em.tInfo('Vui lòng nhập tên thiết bị !', 2);
+		} else {
+			$http
+					.put('/api/device/{0}'.format(dev.id), dev.$new)
+					.success(function (data) {
+						$em.success('Cập nhật thiết bị thành công !', 2);
+						$.extend(dev, dev.$new);
+						dev.$new = $.extend({}, dev);
+					});
+		}
+	};
+
+	$scope.create = function (dev) {
+		var devNew = $scope.devNew;
+		$http
+				.post('/api/device', devNew)
+				.success(function (data) {
+					$em.success('Thêm thiết bị thành công !', 2);
+					$scope.deviceData.push(devNew);
+					devNew.$new = $.extend({}, devNew);
+					$scope.clearNewDev();
+				});
+	};
+
+	$scope.delete = function (dev) {
+		$em.confirm('Bạn có chắc chắn muốn xóa thiết bị ?', function () {
+			$http
+					.delete('/api/device/{0}'.format(dev.id))
+					.success(function (data) {
+						$em.success('Xóa thiết bị thành công !', 2);
+						$scope.deviceData.splice($scope.deviceData.indexOf(dev), 1);
+					});
+		});
+	};
+
+	$('.footable').footable();
+	$scope.$watchCollection('deviceData', function () {
+		$timeout(function () {
+			$('.footable').trigger('footable_redraw');
+		});
+	});
+
 });

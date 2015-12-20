@@ -63,14 +63,33 @@ app.factory('$categorySvc', function ($http) {
 		load: function (callback) {
 			var _this = this;
 			$http.get('/api/category').success(function (data) {
-				_this.data = data.map(function (cat) {
-					return {
-						id: cat.id,
-						name: cat.name,
-						newName: cat.name,
-						image: cat.image
-					}
+				$.each(data, function (index, cat) {
+					cat.newName = cat.name;
 				});
+				_this.data = data;
+				if (callback) callback();
+			});
+		},
+		firstLoad: function (callback) {
+			if (!this.data) {
+				this.load(callback);
+			} else {
+				callback();
+			}
+		},
+		data: null
+	}
+});
+
+app.factory('$deviceSvc', function ($http) {
+	return {
+		load: function (callback) {
+			var _this = this;
+			$http.get('/api/device').success(function (data) {
+				$.each(data, function (idx, dev) {
+					dev.$new = $.extend({}, dev);
+				});
+				_this.data = data;
 				if (callback) callback();
 			});
 		},

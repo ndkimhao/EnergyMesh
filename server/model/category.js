@@ -13,7 +13,7 @@ var relPath = 'userdata/category/';
 var categorySchema = new Schema({
 	name: {
 		type: String,
-		required: "Category name must be specified",
+		required: 'Category name must be specified',
 		unique: false
 	},
 	image: {

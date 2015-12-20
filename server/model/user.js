@@ -9,14 +9,14 @@ var userSchema = exports.userSchema = new Schema({
 
 	username: {
 		type: String,
-		required: "Username must be specified",
+		required: 'Username must be specified',
 		unique: true,
 		lowercase: true
 	},
 
 	password: {
 		type: String,
-		required: "Password must be specified"
+		required: 'Password must be specified'
 	},
 
 	created: {
@@ -41,4 +41,4 @@ userSchema.virtual('clientData').get(function () {
 
 exports.init = function () {
 	mongoose.model('User', userSchema);
-}
+};

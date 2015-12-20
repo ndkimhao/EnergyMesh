@@ -34,11 +34,6 @@ app.controller('DashboardCtrl', function ($scope, $cookies, $state, $location, $
 		}
 	});
 
-// Remove focus
-	$(".btn-nofocus").mouseup(function () {
-		$(this).blur();
-	});
-
 	$scope.$state = $state;
 
 });

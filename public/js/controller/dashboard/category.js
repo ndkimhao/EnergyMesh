@@ -15,36 +15,31 @@ app.controller('Dashboard.CategoryCtrl', function ($rootScope, $scope, $http, $e
 		image: 'img/other/no-image.png'
 	};
 
-	console.log($categorySvc);
 	$categorySvc.firstLoad(function () {
-		console.log($categorySvc);
 		$scope.categoryData = $categorySvc.data;
 	});
 
-	$scope.deleteNewCategory = function () {
+	$scope.clearNewCategory = function () {
 		$scope.newCat.name = '';
+	};
+	$scope.clearCategory = function (cat) {
+		cat.newName = cat.name;
 	};
 
 	$scope.createCategory = function (cat) {
-		if (cat.name == '') {
-			$em.tInfo('Vui lòng nhập tên danh mục !', 2);
-		} else {
-			$http.post('/api/category/', {
-				name: cat.name
-			}).success(function (data) {
-				$em.success('Thêm danh mục thành công !', 2);
-				cat.name = '';
-				data.newName = data.name;
-				$scope.categoryData.push(data);
-			});
-		}
+		$http.post('/api/category/', {
+			name: cat.name
+		}).success(function (data) {
+			$em.success('Thêm danh mục thành công !', 2);
+			cat.name = '';
+			data.newName = data.name;
+			$scope.categoryData.push(data);
+		});
 	};
 
 	$scope.updateCategory = function (cat) {
 		if (cat.newName == '') {
 			$em.tInfo('Vui lòng nhập tên danh mục !', 2);
-		} else if (cat.newName == cat.name) {
-			$em.tInfo('Vui lòng thay đổi tên trước khi cập nhật !', 2);
 		} else {
 			$http.put('/api/category/{0}'.format(cat.id), {
 				name: cat.newName

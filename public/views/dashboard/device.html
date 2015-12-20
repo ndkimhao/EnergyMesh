@@ -12,42 +12,65 @@
 				</div>
 				<div class="ibox-content">
 
-					<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+					<table class="footable table table-stripped toggle-arrow-tiny dev-table">
 						<thead>
 						<tr>
-							<th>Tên</th>
-							<th data-sort-ignore="true" class="cat-image">Hình ảnh</th>
-							<th data-sort-ignore="true" class="cat-action">Hành động</th>
+							<th data-toggle="true">Tên</th>
+							<th data-sort-ignore="true" class="cat-select" data-hide="phone">Loại</th>
+							<th data-sort-ignore="true" class="dev-action">Hành động</th>
+							<th data-hide="all">Thông tin thiết bị</th>
 						</tr>
 						</thead>
 						<tbody>
-						<tr ng-repeat="cat in categoryData">
-							<td data-value="{{cat.name}}" class="cat-name"
-							    ng-class="{'has-warning': (cat.name != cat.newName)}">
-								<input type="text" placeholder="Tên thiết bị"
-								       class="form-control" ng-model="cat.newName">
-
-							</td>
-							<td class="cat-image">
-								<div tooltip-placement="top" tooltip="Click vào để thay đổi hình ảnh"
-								     ngf-select="uploadCategoryImage($file, cat)" ng-click="uploadCategoryClick(cat)">
-									<img ng-show="cat.image" src="{{cat.image}}"
-									     alt="{{cat.newName}}" class="cat-image">
-								</div>
-								<div ng-show="!cat.image" class="sk-spinner sk-spinner-double-bounce">
-									<div class="sk-double-bounce1"></div>
-									<div class="sk-double-bounce2"></div>
+						<tr ng-repeat="dev in deviceData">
+							<td data-value="{{dev.$new.name}}" class="dev-name"
+							    ng-class="{'has-warning': dev.name != dev.$new.name}">
+								<div style="margin-left: 20px">
+									<input type="text" placeholder="Tên thiết bị"
+									       class="form-control" ng-model="dev.$new.name">
 								</div>
 							</td>
-							<td class="cat-action">
+							<td class="cat-select"
+							    ng-class="{'has-warning': dev.category.id != dev.$new.category.id}">
+								<div class="btn-group btn-block" uib-dropdown>
+									<button type="button" uib-dropdown-toggle
+									        class="btn btn-default btn-outline dropdown-toggle btn-block btn-nofocus">
+										<img src="{{dev.$new.category.image}}"
+										     alt="{{dev.$new.category.name}}" class="cat-image">
+										<span class="cat-name">
+											{{dev.$new.category.name}}
+										</span> <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li ng-repeat="cat in categoryData">
+											<a href="" ng-click="categoryChange(dev.$new, cat)">
+												<img src="{{cat.image}}" alt="{{cat.name}}" class="cat-select">
+												<span class="cat-name">{{cat.name}}</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</td>
+							<td class="dev-action">
 								<a title="Lưu" tooltip-placement="top" tooltip="Lưu thay đổi"
-								   ng-click="updateCategory(cat)">
+								   ng-click="update(dev)" ng-show="isChanged(dev)"
+								   class="animate-fade">
 									<i class="fa fa-check fa-2x text-navy"></i>
 								</a>
-								<a title="Xóa" tooltip-placement="top" tooltip="Xóa danh mục"
-								   ng-click="deleteCategory(cat)">
+								<a title="Reset" tooltip-placement="top" tooltip="Làm lại"
+								   ng-click="clear(dev)" ng-show="isChanged(dev)"
+								   class="animate-fade">
+									<i class="fa fa-eraser"></i>
+								</a>
+								<a title="Xóa" tooltip-placement="top" tooltip="Xóa thiết bị"
+								   ng-click="delete(dev)">
 									<i class="fa fa-remove text-danger"></i>
 								</a>
+							</td>
+							<td>
+								<div>
+									<h1>Test</h1>
+								</div>
 							</td>
 						</tr>
 						</tbody>
@@ -56,25 +79,43 @@
 					<table class="table">
 						<tbody>
 						<tr>
-							<td data-value="{{newCat.name}}" class="cat-name"
-							    ng-class="{'has-warning': (newCat.name != '')}">
-								<input type="text" placeholder="Tên thiết bị"
-								       class="form-control" ng-model="newCat.name">
-
-							</td>
-							<td class="cat-image">
-								<div tooltip-placement="top" tooltip="Thay đổi ảnh sau !">
-									<img src="{{newCat.image}}" alt="{{newCat.name}}" class="cat-image">
+							<td data-value="{{devNew.name}}" class="dev-name"
+							    ng-class="{'has-warning': devNew.name != ''}">
+								<div style="margin-left: 20px">
+									<input type="text" placeholder="Tên thiết bị"
+									       class="form-control" ng-model="devNew.name">
 								</div>
 							</td>
-							<td class="cat-action">
-								<a title="Thêm" tooltip-placement="top" tooltip="Thêm danh mục"
-								   ng-click="createCategory(newCat)">
+							<td class="cat-select hidden-xs">
+								<div class="btn-group btn-block" uib-dropdown>
+									<button type="button" uib-dropdown-toggle
+									        class="btn btn-default btn-outline dropdown-toggle btn-block btn-nofocus">
+										<img src="{{devNew.category.image}}"
+										     alt="{{devNew.category.name}}" class="cat-image">
+										<span class="cat-name">
+											{{devNew.category.name}}
+										</span> <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li ng-repeat="cat in categoryData">
+											<a href="" ng-click="categoryChange(devNew, cat)">
+												<img src="{{cat.image}}" alt="{{cat.name}}" class="cat-select">
+												<span class="cat-name">{{cat.name}}</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</td>
+							<td class="dev-action">
+								<a title="Tạo" tooltip-placement="top" tooltip="Tạo thiết bị"
+								   ng-click="create()" ng-show="devNew.name != ''"
+								   class="animate-fade">
 									<i class="fa fa-check fa-2x text-navy"></i>
 								</a>
-								<a title="Xóa" tooltip-placement="top" tooltip="Xóa dữ liệu"
-								   ng-click="deleteNewCategory()">
-									<i class="fa fa-remove text-danger"></i>
+								<a title="Reset" tooltip-placement="top" tooltip="Làm lại"
+								   ng-click="clearNewDev()" ng-show="devNew.name != ''"
+								   class="animate-fade">
+									<i class="fa fa-eraser"></i>
 								</a>
 							</td>
 						</tr>
@@ -83,6 +124,20 @@
 
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-all-8">
+			<ul class="dropdown-menu cat-select sample-cat-select">
+				<li ng-repeat="cat in categoryData">
+					<a href="">
+						<img src="{{cat.image}}"
+						     alt="{{cat.name}}" class="cat-select">
+						<span class="cat-name">{{cat.name}}</span>
+					</a>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>

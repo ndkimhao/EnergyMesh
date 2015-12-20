@@ -1,0 +1,68 @@
+img.cat-image {
+	vertical-align: middle !important;
+	max-height: 75px;
+	max-width: 100%;
+}
+
+td.cat-select {
+	text-align: center;
+	font-size: 14px;
+}
+
+.cat-select span.cat-name {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+th.cat-select {
+	text-align: center;
+}
+
+td.dev-name {
+	vertical-align: middle !important;
+	font-weight: 600;
+}
+
+img.cat-select {
+	vertical-align: middle !important;
+	max-height: 50px;
+	max-width: 100%;
+}
+
+td.dev-name > input[type=text] {
+	margin-left: 20px;
+}
+
+.dropdown-menu {
+	z-index: 1200;
+}
+
+.sample-cat-select {
+	display: block;
+	position: relative;
+	visibility: hidden;
+}
+
+.has-warning .btn,
+.has-warning .btn:focus {
+	border-color: #f8ac59 !important;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+td.dev-action {
+	vertical-align: middle !important;
+	text-align: center;
+}
+
+th.dev-action {
+	text-align: center;
+}
+
+td.dev-action a {
+	margin-right: 10px;
+}
+
+.footable-toggle {
+	position: absolute;
+	margin-top: 7px;
+}
