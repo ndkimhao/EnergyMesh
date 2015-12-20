@@ -16,3 +16,11 @@
 #page-wrapper {
 	min-height: 100vh;
 }
+
+.sub-active > a {
+	color: #a7b1c2 !important;
+}
+
+.sub-active > a:hover {
+	color: #ffffff !important;
+}

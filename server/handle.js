@@ -17,22 +17,26 @@ exports.general = function (err, res, obj) {
 	return true;
 };
 
-exports.success = function (res) {
-	res.json({msg: 'Success'});
+exports.success = function (res, data) {
+	var resData = {msg: 'Success'};
+	if (data) Object.assign(resData, data)
+	res.json(resData);
 };
 
-exports.error = function (res) {
-	res.status(400).json({msg: 'Error'});
+exports.error = function (res, data) {
+	var resData = {msg: 'Error'};
+	if (data) Object.assign(resData, data)
+	res.status(400).json(resData);
 };
 
-exports.lastHandle = function (res) {
+exports.lastHandle = function (res, data) {
 	return function (err) {
 		if (err) {
 			res.status(500).json({msg: 'Internal server error'});
 			log.error(err);
 			return false;
 		}
-		exports.success(res);
+		exports.success(res, data);
 		return true;
 	}
 };

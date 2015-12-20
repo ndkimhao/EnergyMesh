@@ -26,6 +26,15 @@ var categorySchema = new Schema({
 categorySchema.virtual('imageFile')
 	.set(file.set(uploadTo, relPath, 'image'));
 
+categorySchema.virtual('clientData')
+		.get(function () {
+			return {
+				id: this._id,
+				name: this.name,
+				image: this.image
+			}
+		});
+
 exports.init = function () {
 	mongoose.model('Category', categorySchema);
 }

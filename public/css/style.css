@@ -20,3 +20,12 @@
 
 .no-padding {
 }
+
+.slimScrollRail, .slimScrollBar {
+	z-index: 1200 !important;
+}
+
+#div-body-container {
+	width: 100%;
+	height: 100%;
+}

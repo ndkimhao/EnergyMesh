@@ -1,0 +1,46 @@
+img.cat-image {
+	vertical-align: middle !important;
+	max-height: 100px;
+	max-width: 100%;
+}
+
+td.cat-image {
+	text-align: center;
+}
+
+th.cat-image {
+	text-align: center;
+}
+
+td.cat-name {
+	vertical-align: middle !important;
+	font-size: 1.3em;
+	font-weight: 600;
+}
+
+td.cat-action {
+	vertical-align: middle !important;
+	text-align: center;
+}
+
+th.cat-action {
+	text-align: center;
+}
+
+td.cat-action a {
+	margin-right: 10px;
+}
+
+.update-sucess-msg {
+	color: #F8BB86;
+}
+
+.footable-toggle {
+	position: absolute;
+	margin-top: 7px;
+}
+
+:not(.no-enter)#toast-container > div.ng-enter,
+:not(.no-leave)#toast-container > div.ng-leave {
+	transition: 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+}

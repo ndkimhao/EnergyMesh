@@ -18,10 +18,15 @@ router.put('/:id/image', upload.single('image'), function (req, res) {
 	Category.findById(req.params.id, function (err, cat) {
 		if (handle.general(err, res, cat)) {
 			if (req.file) {
-				cat.imageFile = req.file;
-				handle.success(res);
+				cat.imageFile = [req.file, function () {
+					handle.success(res, {
+						image: cat.image
+					});
+				}];
 			} else {
-				handle.error(res);
+				handle.error(res, {
+					image: 'img/other/no-image.png'
+				});
 			}
 		}
 	});
@@ -29,6 +34,7 @@ router.put('/:id/image', upload.single('image'), function (req, res) {
 
 router
 	.route('/:id')
+	// TODO: delelte image + device associate with this category
 	.delete(function (req, res) {
 		Category.findById(req.params.id, function (err, cat) {
 			if (handle.general(err, res, cat)) {
@@ -54,13 +60,15 @@ router
 			var cat = new Category({
 				name: req.body.name
 			});
-			cat.save(handle.lastHandle(res));
+			cat.save(handle.lastHandle(res, cat.clientData));
 		}
 	})
 	.get(function (req, res) {
 		Category.find(function (err, arr) {
 			if (handle.general(err, res, arr)) {
-				res.json(arr);
+				res.json(arr.map(function (cat) {
+					return cat.clientData;
+				}));
 			}
 		});
 	});

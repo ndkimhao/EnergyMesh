@@ -3,7 +3,8 @@
  */
 
 app = angular.module('energyMeshApp',
-		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies', 'highcharts-ng']);
+		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies', 'highcharts-ng',
+			'toaster', 'ngAnimate', 'ngFileUpload']);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
 	"use strict";
@@ -14,7 +15,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 	$stateProvider
 		.state('home', {
 			url: '/',
-			templateUrl: './views/home.html',
+			templateUrl: './views/index.html',
 			controller: 'HomeCtrl'
 		})
 			.state('dashboard', {
@@ -31,10 +32,16 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 				data: {pageTitle: 'Dashboard'}
 			})
 			.state('dashboard.device', {
-				url: '/devices',
+				url: '/device',
 				templateUrl: './views/dashboard/device.html',
 				controller: 'Dashboard.DeviceCtrl',
 				data: {pageTitle: 'Thiết bị'}
+			})
+			.state('dashboard.category', {
+				url: '/category',
+				templateUrl: './views/dashboard/category.html',
+				controller: 'Dashboard.CategoryCtrl',
+				data: {pageTitle: 'Danh mục thiết bị'}
 		});
 	$urlRouterProvider.when('/dashboard', '/dashboard/main');
 
@@ -50,4 +57,9 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 		socket.emit('connection established');
 	});
 
+	$(function () {
+		$('div#div-body-container').slimScroll({
+			height: '100%'
+		});
+	});
 });

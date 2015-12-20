@@ -8,7 +8,8 @@ var fs = require('fs');
 
 module.exports.set = function (uploadTo, relPath, fieldName) {
 	uploadTo = path.join(cwd, uploadTo);
-	return function (fileObj) {
+	return function (params) {
+		var fileObj = params[0];
 		var filePart = fileObj.originalname.split('.');
 		if (filePart.length > 0)
 			var extension = '.' + filePart[filePart.length - 1];
@@ -35,6 +36,7 @@ module.exports.set = function (uploadTo, relPath, fieldName) {
 			}
 			_this.set(fieldName, path.join(relPath, filename).replace(/\\/g, "/"));
 			_this.save();
+			params[1]();
 		});
 	};
-}
+};

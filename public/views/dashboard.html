@@ -25,11 +25,19 @@
 
 				</li>
 
-				<li ui-sref-active="active">
+				<li ui-sref-active="active" class="active">
 					<a ui-sref="dashboard.main"><i class="fa fa-home"></i> <span class="nav-label">Trang chủ</span></a>
 				</li>
-				<li ui-sref-active="active">
-					<a ui-sref="dashboard.device"><i class="fa fa-book"></i> <span class="nav-label">Thiết bị</span></a>
+				<li ng-class="{active: $state.is('dashboard.device'),
+						'active sub-active': $state.is('dashboard.category')}">
+					<a ui-sref="dashboard.device">
+						<i class="fa fa-book"></i>
+						<span class="nav-label">Thiết bị</span></a>
+					<ul class="nav nav-second-level">
+						<li ui-sref-active="active">
+							<a ui-sref="dashboard.category">Danh mục thiết bị</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 

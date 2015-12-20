@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="css/dashboard/device.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard/category.css">
 <toaster-container></toaster-container>
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -6,26 +6,29 @@
 		<div class="col-md-8 col-centered">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<h5>Thiết bị điện
-						<small>Quản lý thiết bị điện</small>
+					<h5>Danh mục thiết bị điện
+						<small>Quản lý các loại thiết bị điện</small>
 					</h5>
 				</div>
 				<div class="ibox-content">
 
-					<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+					<table class="footable table table-stripped toggle-arrow-tiny">
 						<thead>
 						<tr>
-							<th>Tên</th>
+							<th data-toggle="true">Tên</th>
 							<th data-sort-ignore="true" class="cat-image">Hình ảnh</th>
 							<th data-sort-ignore="true" class="cat-action">Hành động</th>
+							<th data-hide="all">Thông tin thiết bị</th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr ng-repeat="cat in categoryData">
 							<td data-value="{{cat.name}}" class="cat-name"
 							    ng-class="{'has-warning': (cat.name != cat.newName)}">
-								<input type="text" placeholder="Tên thiết bị"
-								       class="form-control" ng-model="cat.newName">
+								<div style="margin-left: 20px">
+									<input type="text" placeholder="Tên thiết bị"
+									       class="form-control" ng-model="cat.newName">
+								</div>
 
 							</td>
 							<td class="cat-image">
@@ -48,6 +51,11 @@
 								   ng-click="deleteCategory(cat)">
 									<i class="fa fa-remove text-danger"></i>
 								</a>
+							</td>
+							<td>
+								<div>
+									<h1>Test</h1>
+								</div>
 							</td>
 						</tr>
 						</tbody>
