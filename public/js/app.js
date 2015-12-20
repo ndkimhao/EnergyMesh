@@ -42,6 +42,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 				templateUrl: './views/dashboard/category.html',
 				controller: 'Dashboard.CategoryCtrl',
 				data: {pageTitle: 'Danh mục thiết bị'}
+			})
+			.state('dashboard.session', {
+				url: '/session',
+				templateUrl: './views/dashboard/session.html',
+				controller: 'Dashboard.SessionCtrl',
+				data: {pageTitle: 'Phiên đo'}
 		});
 	$urlRouterProvider.when('/dashboard', '/dashboard/main');
 
@@ -55,11 +61,5 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 			return socket;
 		});
 		socket.emit('connection established');
-	});
-
-	$(function () {
-		$('div#div-body-container').slimScroll({
-			height: '100%'
-		});
 	});
 });

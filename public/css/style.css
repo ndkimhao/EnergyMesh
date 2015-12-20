@@ -13,16 +13,17 @@
 	src: url('./fonts/UVNKeChuyen/UVNKeChuyen.woff');
 }
 
+div#div-body-container {
+	width: 100%;
+	height: 100%;
+}
+
 .col-centered {
 	float: none;
 	margin: 0 auto;
 }
 
 .no-padding {
-}
-
-.slimScrollRail, .slimScrollBar {
-	z-index: 1200 !important;
 }
 
 #div-body-container {

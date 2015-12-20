@@ -26,12 +26,20 @@ app.controller('DashboardCtrl', function ($scope, $cookies, $state, $location, $
 	});
 
 // Minimalize menu when screen is less than 768px
-	$(window).bind("load resize", function () {
+	$(window).bind('load resize', function () {
 		if ($(this).width() < 769) {
 			$('body').addClass('body-small')
 		} else {
 			$('body').removeClass('body-small')
 		}
+	});
+
+	$(function () {
+		$('div#div-body-container').mCustomScrollbar({
+			axis: 'y',
+			theme: 'minimal-dark',
+			scrollInertia: 250
+		});
 	});
 
 	$scope.$state = $state;
