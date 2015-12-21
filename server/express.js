@@ -31,7 +31,8 @@ exports.init = function () {
 		secret: config.express.sessionSecret,
 		store: new MongoStore({
 			mongooseConnection: mongoose.connection,
-			ttl: config.express.sessionTTL
+			ttl: config.express.sessionTTL,
+			collection: 'httpsessions'
 		}),
 		resave: false,
 		saveUninitialized: false

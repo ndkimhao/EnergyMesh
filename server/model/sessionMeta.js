@@ -1,16 +1,16 @@
 /**
- * Created by Nguyen Duong Kim Hao on 20/12/2015.
+ * Created by Nguyen Duong Kim Hao on 21/12/2015.
  */
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var sessionSchema = new Schema({
+var sessionMetaSchema = new Schema({
 
 	sessionId: {
 		type: String,
 		required: true,
-		unique: false
+		unique: true
 	},
 
 	start: {
@@ -21,18 +21,8 @@ var sessionSchema = new Schema({
 		}
 	},
 
-	lastRecord: {
+	end: {
 		type: Date,
-		required: true,
-		default: function () {
-			return new Date();
-		}
-	},
-
-	data: [Number],
-
-	gap: {
-		type: Number,
 		required: true
 	},
 
@@ -44,5 +34,5 @@ var sessionSchema = new Schema({
 });
 
 exports.init = function () {
-	mongoose.model('Session', sessionSchema);
+	mongoose.model('SessionMeta', sessionMetaSchema);
 };

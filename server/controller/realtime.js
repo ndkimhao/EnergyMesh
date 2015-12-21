@@ -8,10 +8,13 @@ var log = require('../log');
 var handle = require('../handle');
 var socketio = require('socket.io');
 var expressModule = require('../express');
-var lodash = require('lodash');
 var config = require('../config');
-var io;
+var model = require('../model');
+var moment = require('moment');
+var lodash = require('lodash');
+var SessionMeta, Session;
 
+var io;
 var tmpData = {};
 
 router.post('/push', function (req, res) {
@@ -21,6 +24,7 @@ router.post('/push', function (req, res) {
 		obj = tmpData[data.id] = {};
 		obj.id = data.id;
 		obj.data = [];
+		checkSessionMeta(obj.id);
 	} else {
 		obj = tmpData[data.id];
 	}
@@ -50,6 +54,69 @@ function caclPower() {
 	}
 }
 
+function checkSessionMeta(sId) {
+	var sMeta;
+	SessionMeta.findOne({
+		sessionId: sId
+	}, function (err, sess) {
+		if (!err) {
+			if (sess) {
+				sMeta = sess;
+			} else {
+				sMeta = new SessionMeta({
+					sessionId: sId
+				});
+			}
+		}
+		sMeta.end = moment().startOf('hour').add(1, 'hours');
+		sMeta.save();
+	});
+}
+
+function findSession(sId, callback) {
+	Session.findOne({
+		sessionId: sId,
+		lastRecord: {
+			"$gte": moment().add(-config.realtime.collectTime * 2).toDate(),
+			"$lt": new Date()
+		}
+	}, function (err, sess) {
+		if (!err) {
+			var s;
+			if (sess) {
+				s = sess;
+			} else {
+				s = new Session({
+					sessionId: sId,
+					gap: config.realtime.collectTime
+				});
+			}
+			s.lastRecord = new Date();
+			callback(s);
+			s.save();
+		}
+	});
+}
+
+function collectData() {
+	lodash.each(tmpData, function (obj, id) {
+		if (obj.data.length > 0) {
+			var avPower = average(obj.data);
+			obj.data = [];
+			findSession(id, function (s) {
+				s.data.push(avPower);
+			});
+		}
+	});
+}
+
+function average(arr) {
+	return lodash
+					.reduce(arr, function (sum, num) {
+						return sum + num;
+					}, 0) / (arr.length === 0 ? 1 : arr.length);
+}
+
 exports.initSocket = function () {
 	io = socketio.listen(expressModule.server, {
 		path: '/api/realtime/socket'
@@ -63,4 +130,8 @@ exports.initSocket = function () {
 			log.trace('Connection disconnected, id = ', socket.id);
 		});
 	});
+
+	SessionMeta = model.SessionMeta;
+	Session = model.Session;
+	setInterval(collectData, config.realtime.collectTime);
 };

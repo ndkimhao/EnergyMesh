@@ -9,11 +9,13 @@ exports.init = function () {
 	require('./category').init();
 	require('./device').init();
 	require('./sessionMeta').init();
+	require('./session').init();
 
 	Object.assign(module.exports, {
 		User: mongoose.model('User'),
 		Category: mongoose.model('Category'),
 		Device: mongoose.model('Device'),
 		SessionMeta: mongoose.model('SessionMeta'),
+		Session: mongoose.model('Session')
 	});
 };

@@ -4,6 +4,7 @@
 
 var dotenv = require('dotenv');
 var colors = require('colors/safe');
+var ms = require('ms');
 
 function getConfig() {
 	return {
@@ -26,7 +27,8 @@ function getConfig() {
 			}
 		},
 		realtime: {
-			minGap: 1000
+			minGap: ms('1 seconds'),
+			collectTime: ms('15 seconds')
 		}
 	};
 }
