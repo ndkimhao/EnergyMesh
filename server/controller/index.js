@@ -20,5 +20,6 @@ exports.init = function (app) {
 	app.use('/api/realtime/', require('./realtime').router);
 	app.use('/api/category/', require('./category'));
 	app.use('/api/device/', require('./device'));
+	app.use('/api/session/', require('./session'));
 	app.use('/api/', notFound);
 }

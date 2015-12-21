@@ -33,6 +33,17 @@ var sessionMetaSchema = new Schema({
 
 });
 
+sessionMetaSchema.virtual('clientData')
+		.get(function () {
+			return {
+				id: this._id,
+				sessionId: this.sessionId,
+				start: this.start,
+				end: this.end,
+				device: this.device,
+			}
+		});
+
 exports.init = function () {
 	mongoose.model('SessionMeta', sessionMetaSchema);
 };
