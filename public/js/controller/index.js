@@ -95,6 +95,7 @@ app.controller('HomeCtrl', function ($scope, $cookies, $location, $http) {
 					if (status == 200) {
 						$cookies.put('user', JSON.stringify(data));
 						showSuccess('Đăng nhập thành công');
+						window.loading_screen = pleaseWait(window.loadingScreenConfig);
 						$location.path('/dashboard');
 					}
 				})

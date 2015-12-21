@@ -24,6 +24,9 @@ function getConfig() {
 			server: {
 				poolSize: 5
 			}
+		},
+		realtime: {
+			minGap: 1000
 		}
 	};
 }

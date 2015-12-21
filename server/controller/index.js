@@ -3,9 +3,10 @@
  */
 
 var checkUser = function (req, res, next) {
-	if (!req.user && req.path != '/user/login') {
-		return res.status(401).send('Unauthorized');
-	}
+	// TODO: Enable auth
+	//if (!req.user && req.path != '/user/login') {
+	//	return res.status(401).send('Unauthorized');
+	//}
 	next();
 };
 
@@ -16,7 +17,7 @@ var notFound = function (req, res, next) {
 exports.init = function (app) {
 	app.use('/api/', checkUser);
 	app.use('/api/user/', require('./user'));
-	app.use('/api/realtime/', require('./realtime'));
+	app.use('/api/realtime/', require('./realtime').router);
 	app.use('/api/category/', require('./category'));
 	app.use('/api/device/', require('./device'));
 	app.use('/api/', notFound);

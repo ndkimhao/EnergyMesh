@@ -103,3 +103,42 @@ app.factory('$deviceSvc', function ($http) {
 		data: null
 	}
 });
+
+app.factory('$socket', function () {
+	return {
+		load: function (callback) {
+			var _this = this;
+			var socket = io({
+				path: '/api/realtime/socket'
+			});
+			socket.on('connection accepted', function (data) {
+				socket.emit('connection established');
+				_this.io = socket;
+				if (callback) callback();
+			});
+		},
+		firstLoad: function (callback) {
+			if (!this.io) {
+				this.load(callback);
+			} else {
+				if (callback) callback();
+			}
+		},
+		io: null
+	}
+
+});
+
+app.factory('$realtimeData', function () {
+	return {
+		total: [],
+		device: {},
+		tidy: function (maxLen) {
+			if (!maxLen) maxLen = 20;
+			while (this.total.length > maxLen) this.total.shift();
+			$.each(this.device, function (key, val) {
+				while (val.length > maxLen) val.shift();
+			});
+		}
+	};
+});

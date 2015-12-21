@@ -12,6 +12,35 @@
 	<meta name="description" content="Energy Mesh App">
 	<meta name="author" content="Nguyen Duong Kim Hao">
 
+	<link rel="stylesheet" type="text/css" href="css/please-wait.css">
+	<script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/please-wait/build/please-wait.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			window.loadingScreenConfig = {
+				logo: 'img/logo/logo.png',
+				backgroundColor: '#f46d3b',
+				loadingHtml: `
+					<div class="loading-message">
+						Xin vui lòng chờ tải ứng dụng...
+					</div>
+					<div class="sk-three-bounce">
+						<div class="sk-child sk-bounce1"></div>
+						<div class="sk-child sk-bounce2"></div>
+						<div class="sk-child sk-bounce3"></div>
+					</div>
+				`
+			};
+			window.loading_screen = pleaseWait(window.loadingScreenConfig);
+		});
+		$(window).load(function () {
+			if (window.loading_screen) {
+				window.loading_screen.finish();
+				window.loading_screen = null;
+			}
+		});
+	</script>
+
 	<link rel="shortcut icon" href="favicon.ico" type="image/ico"/>
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="lib/sweetalert/dist/sweetalert.css">
@@ -25,7 +54,6 @@
 	<link rel="stylesheet" type="text/css" href="css/dashboard/animate.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
-	<script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="lib/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -35,7 +63,6 @@
 	<script type="text/javascript" src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script type="text/javascript" src="lib/angular-cookies/angular-cookies.min.js"></script>
 	<script type="text/javascript" src="lib/highstock/highstock-all.js"></script>
-	<script type="text/javascript" src="lib/highcharts-ng/dist/highcharts-ng.min.js"></script>
 	<script type="text/javascript" src="lib/footable/dist/footable.all.min.js"></script>
 	<script type="text/javascript" src="lib/metisMenu/dist/metisMenu.min.js"></script>
 	<script type="text/javascript"
@@ -44,6 +71,8 @@
 	<script type="text/javascript" src="lib/AngularJS-Toaster/toaster.min.js"></script>
 	<script type="text/javascript" src="lib/ng-file-upload/ng-file-upload-all.min.js"></script>
 	<script type="text/javascript" src="lib/async/dist/async.min.js"></script>
+	<script type="text/javascript" src="lib/moment/min/moment.min.js"></script>
+	<script type="text/javascript" src="lib/moment/locale/vi.js"></script>
 	<script type="text/javascript" src="api/realtime/socket/socket.io.js"></script>
 
 	<script type="text/javascript" src="js/app.js"></script>

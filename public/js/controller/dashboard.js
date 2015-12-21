@@ -44,4 +44,11 @@ app.controller('DashboardCtrl', function ($scope, $cookies, $state, $location, $
 
 	$scope.$state = $state;
 
+	$(function () {
+		if (window.loading_screen) {
+			window.loading_screen.finish();
+			window.loading_screen = null;
+		}
+	});
+
 });

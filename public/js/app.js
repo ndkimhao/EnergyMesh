@@ -3,13 +3,13 @@
  */
 
 app = angular.module('energyMeshApp',
-		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies', 'highcharts-ng',
+		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies',
 			'toaster', 'ngAnimate', 'ngFileUpload']);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
 	"use strict";
 
-	cfpLoadingBarProvider.includeSpinner = false;
+	//cfpLoadingBarProvider.includeSpinner = false;
 	$urlRouterProvider.otherwise('/');
 
 	$stateProvider
@@ -53,13 +53,9 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 
 	$locationProvider.html5Mode(true);
 
-	var socket = io({
-		path: '/api/realtime/socket'
-	});
-	socket.on('connection accepted', function (data) {
-		app.factory('socket', function () {
-			return socket;
-		});
-		socket.emit('connection established');
+	Highcharts.setOptions({
+		global: {
+			useUTC: false
+		}
 	});
 });

@@ -5,18 +5,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var userSchema = exports.userSchema = new Schema({
+var userSchema = new Schema({
 
 	username: {
 		type: String,
-		required: 'Username must be specified',
+		required: true,
 		unique: true,
 		lowercase: true
 	},
 
 	password: {
 		type: String,
-		required: 'Password must be specified'
+		required: true
 	},
 
 	created: {

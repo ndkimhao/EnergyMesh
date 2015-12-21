@@ -9,13 +9,13 @@ var deviceSchema = exports.userSchema = new Schema({
 
 	name: {
 		type: String,
-		required: 'Name must be specified',
+		required: true,
 		unique: false
 	},
 
 	category: {
 		type: Schema.Types.ObjectId,
-		required: 'Category must be specified',
+		required: true,
 		ref: 'Category'
 	}
 

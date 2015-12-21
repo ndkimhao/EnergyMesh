@@ -19,7 +19,8 @@ exports.init = function () {
 	if (config.debug) {
 		app.use(require('morgan')('dev', {
 			skip: function (req, res) {
-				return req.originalUrl.indexOf('/api/') == -1;
+				return req.originalUrl.indexOf('/api/') == -1 ||
+						req.originalUrl == '/api/realtime/push';
 			}
 		}));
 	}
