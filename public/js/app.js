@@ -4,7 +4,7 @@
 
 app = angular.module('energyMeshApp',
 		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies',
-			'toaster', 'ngAnimate', 'ngFileUpload', 'ngSanitize']);
+			'toaster', 'ngAnimate', 'ngFileUpload', 'ngSanitize', 'cfp.loadingBar']);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
 	"use strict";

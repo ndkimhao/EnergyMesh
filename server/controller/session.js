@@ -21,15 +21,37 @@ router
 					}));
 				}
 			});
+		});
+
+router
+		.route('/:id')
+		.put(function (req, res) {
+			if (req.body.device) {
+				SessionMeta.findById(req.params.id, function (err, sess) {
+					if (handle.general(err, res, sess)) {
+						var devId = req.body.device.id;
+						sess.device = devId;
+						sess.save();
+						Session.update({
+							sessionId: sess.sessionId
+						}, {
+							$set: {device: devId}
+						}, {
+							multi: true
+						}, handle.lastHandle(res));
+				}
+			});
+			}
 		})
-//.post(function (req, res) {
-//	if (req.body.name) {
-//		var dev = new Device({
-//			name: req.body.name,
-//			category: req.body.category.id
-//		});
-//		dev.save(handle.lastHandle(res));
-//	}
-//});
+		.delete(function (req, res) {
+			SessionMeta.findById(req.params.id, function (err, sess) {
+				if (handle.general(err, res, sess)) {
+					Session.remove({
+						sessionId: sess.sessionId
+					}, handle.lastHandle(res));
+					sess.remove();
+				}
+			});
+		});
 
 module.exports = router;

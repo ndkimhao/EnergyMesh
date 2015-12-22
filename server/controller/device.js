@@ -37,15 +37,15 @@ router
 router
 	.route('/:id')
 	.put(function (req, res) {
-		Device.findById(req.params.id, function (err, dev) {
-			if (handle.general(err, res, dev)) {
-				if (req.body.name) {
+		if (req.body.name) {
+			Device.findById(req.params.id, function (err, dev) {
+				if (handle.general(err, res, dev)) {
 					dev.name = req.body.name;
 					dev.category = req.body.category.id;
 					dev.save(handle.lastHandle(res));
 				}
-			}
-		});
+			});
+		}
 	})
 	// TODO: Delete all assoiated data
 	.delete(function (req, res) {

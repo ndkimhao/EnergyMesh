@@ -43,7 +43,7 @@
 									</button>
 									<ul class="dropdown-menu" role="menu">
 										<li ng-repeat="cat in categoryData">
-											<a href="" ng-click="categoryChange(dev.$new, cat)">
+											<a ng-click="categoryChange(dev.$new, cat)">
 												<img src="{{cat.image}}" alt="{{cat.name}}" class="cat-select">
 												<span class="cat-name">{{cat.name}}</span>
 											</a>
@@ -81,12 +81,12 @@
 						<tr>
 							<td data-value="{{devNew.name}}" class="dev-name"
 							    ng-class="{'has-warning': devNew.name != ''}">
-								<div style="margin-left: 20px">
+								<div>
 									<input type="text" placeholder="Tên thiết bị"
 									       class="form-control" ng-model="devNew.name">
 								</div>
 							</td>
-							<td class="cat-select hidden-xs">
+							<td class="cat-select">
 								<div class="btn-group btn-block" uib-dropdown>
 									<button type="button" uib-dropdown-toggle
 									        class="btn btn-default btn-outline dropdown-toggle btn-block btn-nofocus">
@@ -98,7 +98,7 @@
 									</button>
 									<ul class="dropdown-menu" role="menu">
 										<li ng-repeat="cat in categoryData">
-											<a href="" ng-click="categoryChange(devNew, cat)">
+											<a ng-click="categoryChange(devNew, cat)">
 												<img src="{{cat.image}}" alt="{{cat.name}}" class="cat-select">
 												<span class="cat-name">{{cat.name}}</span>
 											</a>

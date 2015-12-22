@@ -1,8 +1,9 @@
 <link rel="stylesheet" type="text/css" href="css/dashboard/session.css">
+<toaster-container></toaster-container>
 
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
-		<div class="col-md-8 col-centered col-lg-8">
+		<div class="col-md-11 col-centered col-lg-11">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
 					<h5>Phiên đo
@@ -15,34 +16,99 @@
 						<thead>
 						<tr>
 							<th data-toggle="true">ID</th>
-							<th>Bắt đầu</th>
-							<th>Kết thúc</th>
-							<th>Thiết bị</th>
-							<th>Hành động</th>
+							<th data-sort-ignore="true">Bắt đầu</th>
+							<th data-sort-ignore="true">Kết thúc</th>
+							<th data-sort-ignore="true" class="dev-select">Thiết bị</th>
+							<th data-sort-ignore="true" class="sess-action">Hành động</th>
 							<th data-hide="all">Thông tin</th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr ng-repeat="sess in sessionData">
-							<td>{{sess.sessionId}}</td>
-							<td>
-								<span uib-tooltip-placement="top"
+							<td class="sess-text" ng-class="{'new-highlight': sess.new}">
+								<span class="sess-id">{{sess.sessionId}}</span>
+							</td>
+							<td class="sess-text">
+								<span uib-tooltip-placement="top" class="sess-time"
 								      uib-tooltip-html="makeTimeTooltip(sess.start)">
-									{{moment(sess.start).fromNow()}}
+									{{makeTimeFromNow(sess.start)}}
 								</span>
 							</td>
-							<td>
-								<span uib-tooltip-placement="top"
+							<td class="sess-text">
+								<span uib-tooltip-placement="top" class="sess-time"
 								      uib-tooltip-html="makeTimeTooltip(sess.end)">
-									{{moment(sess.end).fromNow()}}
+									{{makeTimeFromNow(sess.end)}}
 								</span>
+							</td>
+							<td class="dev-select"
+							    ng-class="{'has-warning': sess.newDev != sess.device}">
+								<div class="btn-group btn-block" uib-dropdown>
+									<button type="button" uib-dropdown-toggle
+									        class="btn btn-default btn-outline dropdown-toggle btn-block btn-nofocus">
+										<img src="{{sess.newDev.category.image}}"
+										     alt="{{sess.newDev.category.name}}" class="cat-image">
+										<span class="dev-name">
+											{{sess.newDev.name}}
+										</span> <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li>
+											<a ng-click="devChange(sess, defaultNewDev)">
+												<img src="{{defaultNewDev.category.image}}"
+												     alt="{{defaultNewDev.category.name}}" class="dev-select">
+												<span class="dev-name">{{defaultNewDev.name}}</span>
+											</a>
+										</li>
+										<li ng-repeat="dev in deviceData">
+											<a ng-click="devChange(sess, dev)">
+												<img src="{{dev.category.image}}"
+												     alt="{{dev.category.name}}" class="dev-select">
+												<span class="dev-name">{{dev.name}}</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</td>
+							<td class="sess-action">
+								<a title="Lưu" uib-tooltip-placement="top" uib-tooltip="Lưu thay đổi"
+								   ng-click="update(sess)" ng-show="sess.newDev != sess.device"
+								   class="animate-fade">
+									<i class="fa fa-check fa-2x text-navy"></i>
+								</a>
+								<a title="Reset" uib-tooltip-placement="top" uib-tooltip="Làm lại"
+								   ng-click="clear(sess)" ng-show="sess.newDev != sess.device"
+								   class="animate-fade">
+									<i class="fa fa-eraser"></i>
+								</a>
+								<a title="Xóa" uib-tooltip-placement="top" uib-tooltip="Xóa phiên đo"
+								   ng-click="delete(sess)">
+									<i class="fa fa-remove text-danger"></i>
+								</a>
 							</td>
 						</tr>
 						</tbody>
 					</table>
-
+					<div class="btn-refresh-container">
+						<button class="btn btn-primary dim btn-nofocus" type="button" ng-click="refresh()">
+							<i class="fa fa-refresh"></i>
+						</button>
+					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-all-8">
+			<ul class="dropdown-menu sample-dev-select" role="menu">
+				<li ng-repeat="dev in deviceData">
+					<a ng-click="devChange(sess, dev)">
+						<img src="{{dev.category.image}}"
+						     alt="{{dev.category.name}}" class="dev-select">
+						<span class="dev-name">{{dev.name}}</span>
+					</a>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>

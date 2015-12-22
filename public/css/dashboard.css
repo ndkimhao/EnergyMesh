@@ -45,6 +45,12 @@
 	color: inherit !important;
 }
 
+.btn-nofocus.btn-primary,
+.btn-nofocus.btn-primary:focus {
+	background-color: #1ab394 !important;
+	border-color: #1ab394 !important;
+}
+
 :not(.no-enter)#toast-container > div.ng-enter,
 :not(.no-leave)#toast-container > div.ng-leave {
 	transition: 200ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
@@ -52,4 +58,17 @@
 
 .mCSB_scrollTools {
 	z-index: 1200 !important;
+}
+
+@keyframes new-highlight {
+	0% {
+		background: yellow;
+	}
+	100% {
+		background: none;
+	}
+}
+
+.new-highlight {
+	animation: new-highlight 2s;
 }
