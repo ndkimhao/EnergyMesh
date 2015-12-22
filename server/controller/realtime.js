@@ -16,6 +16,7 @@ var SessionMeta, Session;
 
 var io;
 var tmpData = {};
+var requestingDataClient = [];
 
 router.post('/push', function (req, res) {
 	var data = req.body;
@@ -48,8 +49,12 @@ function caclPower() {
 				total += data[data.length - 1];
 		});
 		//log(total);
-		io.sockets.emit('reatime-data', {
-			total: total
+		lodash.each(requestingDataClient, function (socket) {
+			if (socket.sendRealtimeData) {
+				socket.emit('reatime data', {
+					total: total
+				});
+			}
 		});
 	}
 }
@@ -132,6 +137,15 @@ exports.initSocket = function () {
 		});
 		socket.on('disconnect', function () {
 			log.trace('Connection disconnected, id = ', socket.id);
+			lodash.remove(requestingDataClient, socket);
+		});
+		socket.on('start data', function () {
+			socket.sendRealtimeData = true;
+			requestingDataClient.push(socket);
+		});
+		socket.on('stop data', function () {
+			socket.sendRealtimeData = false;
+			lodash.remove(requestingDataClient, socket);
 		});
 	});
 

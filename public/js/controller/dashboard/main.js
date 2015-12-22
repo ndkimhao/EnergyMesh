@@ -42,18 +42,19 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 		}).highcharts();
 
 		$scope.$on('$destroy', function () {
+			$socket.io.emit('stop data');
+			$socket.io.removeAllListeners('reatime data');
 			if (realtimeChart) {
 				try {
 					realtimeChart.destroy();
 					realtimeChart = null;
-					console.log('as')
 				} catch (e) {
 				}
 			}
 		});
 
 		$socket.firstLoad(function () {
-			$socket.io.on('reatime-data', function (data) {
+			$socket.io.on('reatime data', function (data) {
 				var point = [new Date().getTime(), data.total];
 
 				if (realtimeChart) {
@@ -64,6 +65,7 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 				$realtimeData.total.push(point);
 				$realtimeData.tidy();
 			});
+			$socket.io.emit('start data');
 		});
 	});
 	$(function () {
