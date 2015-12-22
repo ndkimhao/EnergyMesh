@@ -153,17 +153,3 @@ app.factory('$socket', function () {
 	}
 
 });
-
-app.factory('$realtimeData', function () {
-	return {
-		total: [],
-		device: {},
-		tidy: function (maxLen) {
-			if (!maxLen) maxLen = 20;
-			while (this.total.length > maxLen) this.total.shift();
-			$.each(this.device, function (key, val) {
-				while (val.length > maxLen) val.shift();
-			});
-		}
-	};
-});
