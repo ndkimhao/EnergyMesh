@@ -68,7 +68,7 @@ function checkSessionMeta(sId) {
 				});
 			}
 		}
-		sMeta.end = moment().startOf('hour').add(1, 'hours');
+		sMeta.end = moment().add(config.realtime.chunkTime, 'ms');
 		sMeta.save();
 	});
 }
@@ -79,6 +79,9 @@ function findSession(sId, callback) {
 		lastRecord: {
 			"$gte": moment().add(-config.realtime.collectTime * 2).toDate(),
 			"$lt": new Date()
+		},
+		start: {
+			"$gte": moment().add(-config.realtime.chunkTime).toDate()
 		}
 	}, function (err, sess) {
 		if (!err) {
@@ -90,6 +93,7 @@ function findSession(sId, callback) {
 					sessionId: sId,
 					gap: config.realtime.collectTime
 				});
+				checkSessionMeta(sId);
 			}
 			s.lastRecord = new Date();
 			callback(s);

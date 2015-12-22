@@ -31,7 +31,7 @@
 					</div>
 				`
 			};
-			window.loading_screen = pleaseWait(window.loadingScreenConfig);
+			//window.loading_screen = pleaseWait(window.loadingScreenConfig);
 		});
 		$(window).load(function () {
 			if (window.loading_screen) {
@@ -73,6 +73,7 @@
 	<script type="text/javascript" src="lib/async/dist/async.min.js"></script>
 	<script type="text/javascript" src="lib/moment/min/moment.min.js"></script>
 	<script type="text/javascript" src="lib/moment/locale/vi.js"></script>
+	<script type="text/javascript" src="lib/angular-sanitize/angular-sanitize.min.js"></script>
 	<script type="text/javascript" src="api/realtime/socket/socket.io.js"></script>
 
 	<script type="text/javascript" src="js/app.js"></script>
@@ -83,6 +84,7 @@
 	<script type="text/javascript" src="js/controller/dashboard/main.js"></script>
 	<script type="text/javascript" src="js/controller/dashboard/device.js"></script>
 	<script type="text/javascript" src="js/controller/dashboard/category.js"></script>
+	<script type="text/javascript" src="js/controller/dashboard/session.js"></script>
 </head>
 <body>
 <div id="div-body-container">

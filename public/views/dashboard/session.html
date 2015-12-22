@@ -1,13 +1,47 @@
+<link rel="stylesheet" type="text/css" href="css/dashboard/session.css">
+
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
-		<div class="col-lg-12">
-			<div class="text-center m-t-lg">
-				<h1>
-					Hi
-				</h1>
-				<small>
-					Test
-				</small>
+		<div class="col-md-8 col-centered col-lg-8">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>Phiên đo
+						<small>Quản lý các phiên đo, gán phiên đo cho thiết bị</small>
+					</h5>
+				</div>
+				<div class="ibox-content">
+
+					<table class="footable table table-stripped toggle-arrow-tiny">
+						<thead>
+						<tr>
+							<th data-toggle="true">ID</th>
+							<th>Bắt đầu</th>
+							<th>Kết thúc</th>
+							<th>Thiết bị</th>
+							<th>Hành động</th>
+							<th data-hide="all">Thông tin</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="sess in sessionData">
+							<td>{{sess.sessionId}}</td>
+							<td>
+								<span uib-tooltip-placement="top"
+								      uib-tooltip-html="makeTimeTooltip(sess.start)">
+									{{moment(sess.start).fromNow()}}
+								</span>
+							</td>
+							<td>
+								<span uib-tooltip-placement="top"
+								      uib-tooltip-html="makeTimeTooltip(sess.end)">
+									{{moment(sess.end).fromNow()}}
+								</span>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+				</div>
 			</div>
 		</div>
 	</div>

@@ -31,6 +31,12 @@
 						<span class="nav-label">Trang chủ</span>
 					</a>
 				</li>
+				<li ui-sref-active="active" class="active">
+					<a ui-sref="dashboard.session">
+						<i class="fa fa-list"></i>
+						<span class="nav-label">Phiên đo</span>
+					</a>
+				</li>
 				<li ng-class="{active: $state.is('dashboard.device'),
 						'active sub-active': $state.is('dashboard.category')}">
 					<a ui-sref="dashboard.device">
@@ -41,12 +47,6 @@
 							<a ui-sref="dashboard.category">Danh mục thiết bị</a>
 						</li>
 					</ul>
-				</li>
-				<li ui-sref-active="active" class="active">
-					<a ui-sref="dashboard.session">
-						<i class="fa fa-list"></i>
-						<span class="nav-label">Phiên đo</span>
-					</a>
 				</li>
 			</ul>
 

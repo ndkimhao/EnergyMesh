@@ -29,7 +29,7 @@
 								       class="form-control" ng-model="cat.newName">
 							</td>
 							<td class="cat-image">
-								<div tooltip-placement="top" tooltip="Click vào để thay đổi hình ảnh"
+								<div uib-tooltip-placement="top" uib-tooltip="Click vào để thay đổi hình ảnh"
 								     ngf-select="uploadCategoryImage($file, cat)" ng-click="uploadCategoryClick(cat)">
 									<img ng-show="cat.image" src="{{cat.image}}"
 									     alt="{{cat.newName}}" class="cat-image">
@@ -40,17 +40,17 @@
 								</div>
 							</td>
 							<td class="cat-action">
-								<a title="Lưu" tooltip-placement="top" tooltip="Lưu thay đổi"
+								<a title="Lưu" uib-tooltip-placement="top" uib-tooltip="Lưu thay đổi"
 								   ng-click="updateCategory(cat)" ng-show="cat.name != cat.newName"
 								   class="animate-fade">
 									<i class="fa fa-check fa-2x text-navy"></i>
 								</a>
-								<a title="Reset" tooltip-placement="top" tooltip="Làm lại"
+								<a title="Reset" uib-tooltip-placement="top" uib-tooltip="Làm lại"
 								   ng-click="clearCategory(cat)" ng-show="cat.name != cat.newName"
 								   class="animate-fade">
 									<i class="fa fa-eraser"></i>
 								</a>
-								<a title="Xóa" tooltip-placement="top" tooltip="Xóa danh mục"
+								<a title="Xóa" uib-tooltip-placement="top" uib-tooltip="Xóa danh mục"
 								   ng-click="deleteCategory(cat)">
 									<i class="fa fa-remove text-danger"></i>
 								</a>
@@ -74,17 +74,17 @@
 
 							</td>
 							<td class="cat-image">
-								<div tooltip-placement="top" tooltip="Thay đổi ảnh sau !">
+								<div uib-tooltip-placement="top" uib-tooltip="Thay đổi ảnh sau !">
 									<img src="{{newCat.image}}" alt="{{newCat.name}}" class="cat-image">
 								</div>
 							</td>
 							<td class="cat-action">
-								<a title="Thêm" tooltip-placement="top" tooltip="Thêm danh mục"
+								<a title="Thêm" uib-tooltip-placement="top" uib-tooltip="Thêm danh mục"
 								   ng-click="createCategory(newCat)" ng-show="newCat.name != ''"
 								   class="animate-fade">
 									<i class="fa fa-check fa-2x text-navy"></i>
 								</a>
-								<a title="Reset" tooltip-placement="top" tooltip="Làm lại"
+								<a title="Reset" uib-tooltip-placement="top" uib-tooltip="Làm lại"
 								   ng-click="clearNewCategory()" ng-show="newCat.name != ''"
 								   class="animate-fade">
 									<i class="fa fa-eraser"></i>

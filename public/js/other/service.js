@@ -81,7 +81,7 @@ app.factory('$categorySvc', function ($http) {
 	}
 });
 
-app.factory('$deviceSvc', function ($http) {
+app.factory('$deviceSvc', function ($http, $categorySvc) {
 	return {
 		load: function (callback) {
 			var _this = this;
@@ -100,7 +100,32 @@ app.factory('$deviceSvc', function ($http) {
 				callback();
 			}
 		},
-		data: null
+		data: null,
+		loadDeviceAndCategory: function (callback) {
+			var catData, devData;
+			var $deviceSvc = this;
+			async.parallel([
+				function (callback) {
+					$categorySvc.firstLoad(function () {
+						catData = $categorySvc.data;
+						callback();
+					});
+				},
+				function (callback) {
+					$deviceSvc.firstLoad(function () {
+						devData = $deviceSvc.data;
+						callback();
+					});
+				}
+			], function () {
+				$.each(devData, function (idx, dev) {
+					dev.category = dev.$new.category = catData.find(function (cat) {
+						return cat.id == dev.category.id;
+					});
+				});
+				callback(devData, catData);
+			});
+		}
 	}
 });
 

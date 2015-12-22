@@ -11,25 +11,9 @@ app.controller('Dashboard.DeviceCtrl', function ($rootScope, $scope, $http, $em,
 		};
 	};
 
-	async.parallel([
-		function (callback) {
-			$categorySvc.firstLoad(function () {
-				$scope.categoryData = $categorySvc.data;
-				callback();
-			});
-		},
-		function (callback) {
-			$deviceSvc.firstLoad(function () {
-				$scope.deviceData = $deviceSvc.data;
-				callback();
-			});
-		}
-	], function () {
-		$.each($scope.deviceData, function (idx, dev) {
-			dev.category = dev.$new.category = $scope.categoryData.find(function (cat) {
-				return cat.id == dev.category.id;
-			});
-		});
+	$deviceSvc.loadDeviceAndCategory(function (devData, catData) {
+		$scope.categoryData = catData;
+		$scope.deviceData = devData;
 		$scope.clearNewDev();
 	});
 

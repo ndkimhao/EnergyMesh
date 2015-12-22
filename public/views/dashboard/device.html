@@ -52,17 +52,17 @@
 								</div>
 							</td>
 							<td class="dev-action">
-								<a title="Lưu" tooltip-placement="top" tooltip="Lưu thay đổi"
+								<a title="Lưu" uib-tooltip-placement="top" uib-tooltip="Lưu thay đổi"
 								   ng-click="update(dev)" ng-show="isChanged(dev)"
 								   class="animate-fade">
 									<i class="fa fa-check fa-2x text-navy"></i>
 								</a>
-								<a title="Reset" tooltip-placement="top" tooltip="Làm lại"
+								<a title="Reset" uib-tooltip-placement="top" uib-tooltip="Làm lại"
 								   ng-click="clear(dev)" ng-show="isChanged(dev)"
 								   class="animate-fade">
 									<i class="fa fa-eraser"></i>
 								</a>
-								<a title="Xóa" tooltip-placement="top" tooltip="Xóa thiết bị"
+								<a title="Xóa" uib-tooltip-placement="top" uib-tooltip="Xóa thiết bị"
 								   ng-click="delete(dev)">
 									<i class="fa fa-remove text-danger"></i>
 								</a>
@@ -107,12 +107,12 @@
 								</div>
 							</td>
 							<td class="dev-action">
-								<a title="Tạo" tooltip-placement="top" tooltip="Tạo thiết bị"
+								<a title="Tạo" uib-tooltip-placement="top" uib-tooltip="Tạo thiết bị"
 								   ng-click="create()" ng-show="devNew.name != ''"
 								   class="animate-fade">
 									<i class="fa fa-check fa-2x text-navy"></i>
 								</a>
-								<a title="Reset" tooltip-placement="top" tooltip="Làm lại"
+								<a title="Reset" uib-tooltip-placement="top" uib-tooltip="Làm lại"
 								   ng-click="clearNewDev()" ng-show="devNew.name != ''"
 								   class="animate-fade">
 									<i class="fa fa-eraser"></i>

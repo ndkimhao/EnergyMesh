@@ -4,7 +4,7 @@
 
 app = angular.module('energyMeshApp',
 		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies',
-			'toaster', 'ngAnimate', 'ngFileUpload']);
+			'toaster', 'ngAnimate', 'ngFileUpload', 'ngSanitize']);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
 	"use strict";
@@ -58,4 +58,5 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 			useUTC: false
 		}
 	});
+	moment.defineLocale('vi', {longDateFormat: {LT: 'hh:mm A'}});
 });
