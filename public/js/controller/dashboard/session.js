@@ -31,6 +31,7 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 			});
 		}, function (callback) {
 			$http.get('/api/session').success(function (data) {
+				data.reverse();
 				tmpSessData = data;
 				callback();
 				cfpLoadingBar.inc();
