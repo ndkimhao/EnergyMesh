@@ -63,7 +63,7 @@ app.factory('$categorySvc', function ($http) {
 		load: function (callback) {
 			var _this = this;
 			$http.get('/api/category').success(function (data) {
-				$.each(data, function (index, cat) {
+				data.forEach(function (cat) {
 					cat.newName = cat.name;
 				});
 				_this.data = data;
@@ -86,7 +86,7 @@ app.factory('$deviceSvc', function ($http, $categorySvc) {
 		load: function (callback) {
 			var _this = this;
 			$http.get('/api/device').success(function (data) {
-				$.each(data, function (idx, dev) {
+				data.forEach(function (dev) {
 					dev.$new = $.extend({}, dev);
 				});
 				_this.data = data;
@@ -118,7 +118,7 @@ app.factory('$deviceSvc', function ($http, $categorySvc) {
 					});
 				}
 			], function () {
-				$.each(devData, function (idx, dev) {
+				devData.forEach(function (dev) {
 					dev.category = dev.$new.category = catData.find(function (cat) {
 						return cat.id == dev.category.id;
 					});
@@ -147,7 +147,7 @@ app.factory('$sessionSvc', function ($http, $deviceSvc, cfpLoadingBar) {
 					callback();
 				});
 			}], function () {
-				$.each(_this.data, function (idx, sess) {
+				_this.data.forEach(function (sess) {
 					if (sess.device) {
 						sess.newDev = sess.device = _this.deviceData.find(function (dev) {
 							return dev.id == sess.device;

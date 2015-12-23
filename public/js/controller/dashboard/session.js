@@ -17,7 +17,7 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 		var oldData = $scope.sessionData;
 		$sessionSvc.firstLoad(function () {
 			if (oldData) {
-				$.each($sessionSvc.data, function (idx, sess) {
+				$sessionSvc.data.forEach(function (sess) {
 					if (!oldData.find(function (elem) {
 								return elem.id == sess.id;
 							})

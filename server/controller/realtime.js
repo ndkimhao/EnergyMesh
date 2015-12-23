@@ -19,40 +19,45 @@ var tmpData = {};
 var requestingDataClient = [];
 
 router.post('/push', function (req, res) {
+	handle.success(res);
+
 	var data = req.body;
 	var obj;
 	if (!tmpData[data.id]) {
 		obj = tmpData[data.id] = {};
 		obj.id = data.id;
 		obj.data = [];
+		obj.tmpData = null;
 		checkSessionMeta(obj.id);
 	} else {
 		obj = tmpData[data.id];
 	}
 	obj.data.push(data.power);
-	//log(obj);
-	caclPower();
-
-	handle.success(res);
+	sendDataToSocket();
 });
 exports.router = router;
 
 var lastSend = 0;
-function caclPower() {
+function sendDataToSocket() {
 	var now = new Date().getTime();
 	if (now - lastSend > config.realtime.minGap) {
 		lastSend = new Date().getTime();
 		var total = 0;
-		lodash.each(tmpData, function (elem) {
+		var detailData = {};
+		lodash.each(tmpData, function (elem, sessId) {
 			var data = elem.data;
-			if (data && data.length > 0)
-				total += data[data.length - 1];
+			if (data && (data.length > 0 || elem.tmpData)) {
+				var val = data[data.length - 1] || elem.tmpData;
+				total += val;
+				detailData[sessId] = val;
+			}
 		});
 		//log(total);
 		lodash.each(requestingDataClient, function (socket) {
 			if (socket.sendRealtimeData) {
 				socket.emit('reatime data', {
-					total: total
+					total: total,
+					detail: detailData
 				});
 			}
 		});
@@ -112,9 +117,12 @@ function collectData() {
 		if (obj.data.length > 0) {
 			var avPower = average(obj.data);
 			obj.data = [];
+			obj.tmpData = avPower;
 			findSession(id, function (s) {
 				s.data.push(avPower);
 			});
+		} else {
+			obj.tmpData = null;
 		}
 	});
 }
