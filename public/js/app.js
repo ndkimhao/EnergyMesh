@@ -48,6 +48,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 				templateUrl: './views/dashboard/session.html',
 				controller: 'Dashboard.SessionCtrl',
 				data: {pageTitle: 'Phiên đo'}
+			})
+			.state('dashboard.statistic', {
+				url: '/statistic',
+				templateUrl: './views/dashboard/statistic.html',
+				controller: 'Dashboard.StatisticCtrl',
+				data: {pageTitle: 'Thống kê'}
 		});
 	$urlRouterProvider.when('/dashboard', '/dashboard/main');
 

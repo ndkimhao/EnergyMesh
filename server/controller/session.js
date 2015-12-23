@@ -11,6 +11,7 @@ var model = require('../model');
 var Session = model.Session;
 var SessionMeta = model.SessionMeta;
 
+// TODO: get only leastest session data
 router
 		.route('/')
 		.get(function (req, res) {

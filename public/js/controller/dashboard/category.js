@@ -2,7 +2,7 @@
  * Created by Nguyen Duong Kim Hao on 20/12/2015.
  */
 
-app.controller('Dashboard.CategoryCtrl', function ($rootScope, $scope, $http, $em, Upload, $timeout, $categorySvc) {
+app.controller('Dashboard.CategoryCtrl', function ($scope, $http, $em, Upload, $timeout, $categorySvc) {
 	$('.footable').footable();
 	$scope.$watchCollection('categoryData', function () {
 		$timeout(function () {

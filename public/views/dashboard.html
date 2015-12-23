@@ -37,6 +37,12 @@
 						<span class="nav-label">Phiên đo</span>
 					</a>
 				</li>
+				<li ui-sref-active="active" class="active">
+					<a ui-sref="dashboard.statistic">
+						<i class="fa fa-bar-chart"></i>
+						<span class="nav-label">Thống kê</span>
+					</a>
+				</li>
 				<li ng-class="{active: $state.is('dashboard.device'),
 						'active sub-active': $state.is('dashboard.category')}">
 					<a ui-sref="dashboard.device">

@@ -65,8 +65,30 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 		sess.newDev = sess.device;
 	};
 
+	function isBetween(a, b, c) {
+		return b <= a && a <= c;
+	}
+
 	$scope.update = function (sess) {
-		$http
+		var allow = true;
+		if (sess.newDev.id) {
+			// TODO bind to chunkTime
+			var t_start = +sess.start;
+			var t_end = +sess.end - (30 * 60 * 1000);
+			var now = new Date().getTime();
+			$scope.sessionData.some(function (sess_1) {
+				if (sess_1.device.id != sess.newDev.id) return false;
+				var t_start_1 = +sess_1.start;
+				var t_end_1 = +sess_1.end - (30 * 60 * 1000);
+				if (isBetween(t_start, t_start_1, t_end_1) || isBetween(t_end, t_start_1, t_end_1)) {
+					allow = false;
+					return true;
+				}
+				return false;
+			});
+		}
+		if (allow) {
+			$http
 				.put('/api/session/{0}'.format(sess.id), {
 					device: sess.newDev
 				})
@@ -74,6 +96,9 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 					$em.success('Cập nhật phiên đo thành công !', 2);
 					sess.device = sess.newDev;
 				});
+		} else {
+			$em.error('Phiên đo bị trùng lặp !<br>Tối đa một phiên đo một thiết bị cùng lúc.', 2);
+		}
 	};
 
 	$scope.delete = function (sess) {
