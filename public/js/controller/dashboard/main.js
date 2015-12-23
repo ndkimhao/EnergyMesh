@@ -137,25 +137,51 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 
 					var now = new Date().getTime();
 					var totalPower = data.total;
+					var remainPower = totalPower;
 					var shift = realtimeChart.series[0].data.length >= 20;
 					realtimeChart.series[0].addPoint([now, totalPower], false, shift);
 
 					var pieData = [];
+					var detailDevice = [];
 					var detail = data.detail;
 					for (var sessId in detail) {
 						if (detail.hasOwnProperty(sessId)) {
-							var dev = sessionData[sessId].device;
-							var devCustomObj = deviceData[dev.id];
-							var power = detail[sessId];
-							shift = devCustomObj.series.data.length >= 20;
-							devCustomObj.series.addPoint([now, power], false, shift);
-							pieData.push({
-								name: dev.name,
-								y: power / totalPower * 100,
-								color: devCustomObj.color
-							});
+							var sessDev = sessionData[sessId];
+							if (sessDev) {
+								var dev = sessDev.device;
+								if (dev.id) {
+									var devCustomObj = deviceData[dev.id];
+									var power = detail[sessId];
+									shift = devCustomObj.series.data.length >= 20;
+									// TODO: remove series data if not received data
+									devCustomObj.series.addPoint([now, power], false, shift);
+									pieData.push({
+										name: dev.name,
+										y: power / totalPower * 100,
+										color: devCustomObj.color
+									});
+									detailDevice.push({
+										name: dev.name,
+										power: power,
+										kwh: power * 5,
+										money: 17000,
+										category: dev.category
+									});
+									remainPower -= power;
+								}
+							}
 						}
 					}
+					if (remainPower > 1) {
+						pieData.push({
+							name: 'Chưa chọn',
+							y: remainPower / totalPower * 100,
+							color: '#FFF263'
+						});
+					}
+
+					$scope.detailDevice = detailDevice;
+					$scope.$digest();
 
 					//realtimePie.redraw();
 					realtimePie.series[0].setData(pieData);
@@ -172,6 +198,13 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 				realtimeChart.reflow();
 			}
 		}, 50);
+	});
+
+	$('.footable').footable();
+	$scope.$watchCollection('detailDevice', function () {
+		$timeout(function () {
+			$('.footable').trigger('footable_redraw');
+		});
 	});
 
 });
