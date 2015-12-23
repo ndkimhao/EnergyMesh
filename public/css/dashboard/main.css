@@ -1,3 +1,11 @@
 .realtime-chart-container {
 	height: 400px;
 }
+
+.realtime-pie-chart-container {
+	height: 400px;
+}
+
+div.gutter {
+	margin-top: 20px;
+}

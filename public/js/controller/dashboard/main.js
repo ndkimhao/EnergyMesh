@@ -4,23 +4,30 @@
 
 app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $socket, $sessionSvc) {
 
-	var sessionData, deviceData, finishChartCallback;
+	var sessionData, deviceData;
+	var finishChartCallback = [null, null];
+	var realtimeChart, realtimePie;
 	async.parallel(
 			[
 				function (callback) {
-					finishChartCallback = callback;
+					finishChartCallback[0] = callback;
+				},
+				function (callback) {
+					finishChartCallback[1] = callback;
 				},
 				function (callback) {
 					$sessionSvc.load(function () {
 						sessionData = {};
 						$sessionSvc.data.forEach(function (elem) {
 							sessionData[elem.sessionId] = elem;
-						});
+					});
 						deviceData = {};
 						callback();
-					});
+				});
 				}
 			], function () {
+				var count = 1;
+				var colors = Highcharts.getOptions().colors;
 				$sessionSvc.deviceData.forEach(function (elem) {
 					deviceData[elem.id] = {
 						obj: elem,
@@ -32,13 +39,13 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 								radius: 3
 							}
 							//yAxis: 1
-						}, false)
+						}, false),
+						color: colors[count++]
 					};
 					realtimeChart.redraw();
-				});
+			});
 			});
 
-	var realtimeChart;
 	$timeout(function () {
 		$('div#realtimeChart').highcharts({
 			chart: {
@@ -48,7 +55,7 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 				events: {
 					load: function () {
 						realtimeChart = this;
-						finishChartCallback();
+						finishChartCallback[0]();
 					}
 				}
 			},
@@ -58,11 +65,10 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 				type: 'datetime'
 			},
 			tooltip: {
-				formatter: function () {
-					return '<b>' + this.series.name + '</b><br/>Thời gian: ' +
-							Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>Công suất: ' +
-							Highcharts.numberFormat(this.y, 2) + ' W';
-				}
+				pointFormat: '<span style="color:{point.color}">\u25CF {series.name}:</span> {point.y:.2f} W<br/>',
+				xDateFormat: '%H:%M:%S',
+				headerFormat: 'Thời gian: {point.key}<br>',
+				shared: true
 			},
 			yAxis: [
 				{title: {text: 'Công suất (W)'}}
@@ -75,6 +81,40 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 					enabled: true,
 					radius: 4
 				}
+			}]
+		});
+
+		$('div#realtimePieChart').highcharts({
+			chart: {
+				type: 'pie',
+				options3d: {
+					enabled: true,
+					alpha: 45
+				},
+				events: {
+					load: function () {
+						realtimePie = this;
+						finishChartCallback[1]();
+					}
+				}
+			},
+			title: {text: 'Tỷ lệ tiêu thụ điện'},
+			tooltip: {
+				headerFormat: '<b>{point.key}: </b>',
+				pointFormat: '{point.percentage:.2f}%'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					depth: 35,
+					dataLabels: {enabled: false},
+					showInLegend: true
+				}
+			},
+			series: [{
+				type: 'pie',
+				data: []
 			}]
 		});
 
@@ -96,18 +136,29 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 				if (realtimeChart) {
 
 					var now = new Date().getTime();
+					var totalPower = data.total;
 					var shift = realtimeChart.series[0].data.length >= 20;
-					realtimeChart.series[0].addPoint([now, data.total], false, shift);
+					realtimeChart.series[0].addPoint([now, totalPower], false, shift);
 
+					var pieData = [];
 					var detail = data.detail;
 					for (var sessId in detail) {
 						if (detail.hasOwnProperty(sessId)) {
-							deviceData[sessionData[sessId].device.id].series.addPoint(
-									[now, detail[sessId]], false, shift
-							);
+							var dev = sessionData[sessId].device;
+							var devCustomObj = deviceData[dev.id];
+							var power = detail[sessId];
+							shift = devCustomObj.series.data.length >= 20;
+							devCustomObj.series.addPoint([now, power], false, shift);
+							pieData.push({
+								name: dev.name,
+								y: power / totalPower * 100,
+								color: devCustomObj.color
+							});
 						}
 					}
 
+					//realtimePie.redraw();
+					realtimePie.series[0].setData(pieData);
 					realtimeChart.redraw();
 
 				}
