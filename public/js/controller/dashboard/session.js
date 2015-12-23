@@ -2,55 +2,22 @@
  * Created by Nguyen Duong Kim Hao on 20/12/2015.
  */
 
-app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $deviceSvc, $em, cfpLoadingBar) {
+app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $deviceSvc,
+                                                  $em, cfpLoadingBar, $sessionSvc) {
 	$('.footable').footable();
 	$scope.$watchCollection('sessionData', function () {
 		$timeout(function () {
 			$('.footable').trigger('footable_redraw');
 		});
 	});
-	$scope.moment = window.moment;
 
-	$scope.defaultNewDev = {
-		id: null,
-		name: 'Chưa chọn',
-		category: {
-			name: 'Chưa chọn',
-			image: 'img/other/none.png'
-		}
-	};
-
+	$scope.defaultNewDev = $sessionSvc.defaultNewDev;
 	var loadSessionData = function () {
 		var tmpSessData;
 		var oldData = $scope.sessionData;
-		async.parallel([function (callback) {
-			$deviceSvc.loadDeviceAndCategory(function (devData) {
-				$scope.deviceData = devData;
-				callback();
-				cfpLoadingBar.inc();
-			});
-		}, function (callback) {
-			$http.get('/api/session').success(function (data) {
-				data.reverse();
-				tmpSessData = data;
-				callback();
-				cfpLoadingBar.inc();
-			});
-		}], function () {
-			$.each(tmpSessData, function (idx, sess) {
-				if (sess.device) {
-					sess.newDev = sess.device = $scope.deviceData.find(function (dev) {
-						return dev.id == sess.device;
-					});
-				} else {
-					sess.newDev = sess.device = $scope.defaultNewDev;
-				}
-				sess.start = moment(sess.start);
-				sess.end = moment(sess.end);
-			});
-			$scope.sessionData = tmpSessData;
+		$sessionSvc.firstLoad(function () {
 			if (oldData) {
-				$.each(tmpSessData, function (idx, sess) {
+				$.each($sessionSvc.data, function (idx, sess) {
 					if (!oldData.find(function (elem) {
 								return elem.id == sess.id;
 							})
@@ -59,6 +26,8 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 					}
 				});
 			}
+			$scope.deviceData = $sessionSvc.deviceData;
+			$scope.sessionData = $sessionSvc.data;
 		});
 	};
 	loadSessionData();

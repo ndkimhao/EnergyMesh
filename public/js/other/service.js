@@ -129,6 +129,58 @@ app.factory('$deviceSvc', function ($http, $categorySvc) {
 	}
 });
 
+app.factory('$sessionSvc', function ($http, $deviceSvc, cfpLoadingBar) {
+	return {
+		load: function (callback) {
+			var _this = this;
+			async.parallel([function (callback) {
+				$deviceSvc.loadDeviceAndCategory(function (devData) {
+					_this.deviceData = devData;
+					cfpLoadingBar.inc();
+					callback();
+				});
+			}, function (callback) {
+				$http.get('/api/session').success(function (data) {
+					data.reverse();
+					_this.data = data;
+					cfpLoadingBar.inc();
+					callback();
+				});
+			}], function () {
+				$.each(_this.data, function (idx, sess) {
+					if (sess.device) {
+						sess.newDev = sess.device = _this.deviceData.find(function (dev) {
+							return dev.id == sess.device;
+						});
+					} else {
+						sess.newDev = sess.device = _this.defaultNewDev;
+					}
+					sess.start = moment(sess.start);
+					sess.end = moment(sess.end);
+				});
+				callback();
+			});
+		},
+		firstLoad: function (callback) {
+			if (!this.data) {
+				this.load(callback);
+			} else {
+				callback();
+			}
+		},
+		data: null,
+		deviceData: null,
+		defaultNewDev: {
+			id: null,
+			name: 'Chưa chọn',
+			category: {
+				name: 'Chưa chọn',
+				image: 'img/other/none.png'
+			}
+		}
+	}
+});
+
 app.factory('$socket', function () {
 	return {
 		load: function (callback) {
