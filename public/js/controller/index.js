@@ -58,24 +58,24 @@ app.controller('HomeCtrl', function ($scope, $cookies, $location, $http) {
 		var validated = true;
 		var regx = /^[A-Za-z0-9]+$/;
 		if (!$scope.user.username || $scope.user.username == '') {
-			$scope.validations.username.text = 'Username is required';
+			$scope.validations.username.text = 'Hãy nhập tên đăng nhập';
 			$scope.validations.username.show = true;
 			validated = false;
 		} else if ($scope.user.username.length < 3) {
-			$scope.validations.username.text = 'Username cannot be less than 3 characters';
+			$scope.validations.username.text = 'Tên đăng nhập tối thiểu 3 kí tự';
 			$scope.validations.username.show = true;
 			validated = false;
 		} else if (!regx.test($scope.user.username)) {
-			$scope.validations.username.text = 'Username can only contain alphanumeric characters';
+			$scope.validations.username.text = 'Tên đăng nhập không được chứa kí tự đặc biệt';
 			$scope.validations.username.show = true;
 			validated = false;
 		}
 		if (!$scope.user.password || $scope.user.password == '') {
-			$scope.validations.password.text = 'Password is required';
+			$scope.validations.password.text = 'Hãy nhập mật khẩu';
 			$scope.validations.password.show = true;
 			validated = false;
 		} else if ($scope.user.password.length < 6) {
-			$scope.validations.password.text = 'Password cannot be less than six characters';
+			$scope.validations.password.text = 'Mật khẩu tối thiểu 6 kí tự';
 			$scope.validations.password.show = true;
 			validated = false;
 		}

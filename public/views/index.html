@@ -29,13 +29,14 @@
 			</div>
 
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Username" ng-model="user.username"
+				<input type="text" class="form-control" placeholder="Tên đăng nhập" ng-model="user.username"
 				       aria-describedby="basic-addon">
 				<span class="input-group-addon" id="basic-addon">@energymesh</span>
 			</div>
 			<span class="required" ng-show="validations.username.show">{{validations.username.text}}</span>
 
-			<input type="password" class="form-control" id="password" ng-model="user.password" placeholder="Password">
+			<input type="password" class="form-control" id="password" ng-model="user.password"
+			       placeholder="Mật khẩu">
 			<span class="required" ng-show="validations.password.show">{{validations.password.text}}</span>
 
 			<button type="submit" class="btn btn-success" ng-click="login()">
