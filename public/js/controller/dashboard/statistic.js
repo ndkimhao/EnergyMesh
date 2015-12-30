@@ -20,52 +20,73 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 					overallChart.series.forEach(function (elem) {
 						elem.setData([]);
 					});
+					hourlyChart.series.forEach(function (elem) {
+						elem.setData(function () {
+							var ret = [];
+							for (var i = 1; i <= 24; i++) {
+								ret.push(0);
+							}
+							return ret;
+						}());
+					});
 					var overallTotal = [];
 					data.forEach(function (elem) {
 						var time = new Date(elem.start).getTime();
-						var seriesOverall =
-								deviceData[sessionData[elem.sessionId].device.id].seriesOverall;
+						var devCusObj = deviceData[sessionData[elem.sessionId].device.id];
+						var seriesOverall = devCusObj.seriesOverall;
+						var seriesHourly = devCusObj.seriesHourly;
 						var gap = elem.gap;
+						var kwhFactor = (gap / (1000 * 60 * 60));
 
 						elem.data.forEach(function (dat) {
 							seriesOverall.addPoint([time, dat], false);
 
 							var ot = overallTotal.find(function (e) {
 								return e[0] == time;
-							});
+						});
 							if (!ot) {
 								ot = [time, 0];
 								overallTotal.push(ot);
 							}
 							ot[1] += dat;
 
+							var date = new Date(time);
+							var hour = date.getHours() - 1;
+							var work = dat * kwhFactor;
+							seriesHourly.data[hour].update([hour,
+								seriesHourly.data[hour].y + work], false);
+
 							time += gap;
-						});
+					});
 						seriesOverall.addPoint([time + 1, null], false);
 						overallTotal.push([time + 1, null]);
-					});
+				});
 					overallChart.series[0].setData(overallTotal);
 					overallChart.redraw();
+					hourlyChart.redraw();
 				});
 	};
 
 	var sessionData, deviceData;
-	var overallChart;
-	var finishChartCallback = [null];
+	var overallChart, hourlyChart;
+	var finishChartCallback = [null, null];
 	async.parallel(
 			[
 				function (callback) {
 					finishChartCallback[0] = callback;
 				},
 				function (callback) {
+					finishChartCallback[1] = callback;
+				},
+				function (callback) {
 					$sessionSvc.load(function () {
 						sessionData = {};
 						$sessionSvc.data.forEach(function (elem) {
 							sessionData[elem.sessionId] = elem;
-						});
+					});
 						deviceData = {};
 						callback();
-					});
+				});
 				}
 			], function () {
 				var count = 1;
@@ -75,18 +96,29 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 						obj: elem,
 						seriesOverall: overallChart.addSeries({
 							name: elem.name,
-							type: 'spline',
 							data: []
+						}, false),
+						seriesHourly: hourlyChart.addSeries({
+							name: elem.name,
+							data: function () {
+								var ret = [];
+								for (var i = 1; i <= 24; i++) {
+									ret.push(0);
+								}
+								return ret;
+							}()
 						}, false),
 						color: colors[count++]
 					};
-				});
+			});
+				hourlyChart.redraw();
 			});
 
 	$(function () {
 		setTimeout(function () {
 			$('#overallChart').highcharts('StockChart', {
 				chart: {
+					type: 'spline',
 					zoomType: 'x',
 					events: {
 						load: function () {
@@ -120,7 +152,6 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 				title: {text: 'Biểu đồ tổng quan'},
 				series: [{
 					name: 'Tổng',
-					type: 'spline',
 					data: []
 				}],
 				legend: {enabled: true},
@@ -129,7 +160,56 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 					xDateFormat: '%H:%M:%S',
 					headerFormat: 'Thời gian: {point.key}<br>',
 					shared: true
+				}
+			});
+
+			$('#hourlyChart').highcharts({
+				chart: {
+					type: 'column',
+					zoomType: 'x',
+					events: {
+						load: function () {
+							hourlyChart = this;
+							if (finishChartCallback[1]) finishChartCallback[1]();
+							finishChartCallback[1] = null;
+						}
+					}
 				},
+				title: {text: 'Thống kê theo giờ'},
+				xAxis: {
+					categories: function () {
+						var ret = [];
+						for (var i = 1; i <= 24; i++) {
+							ret.push(i + ' giờ');
+						}
+						return ret;
+					}(),
+					title: {text: 'Giờ trong ngày'}
+				},
+				yAxis: {
+					title: {text: 'Điện năng (kWh)'},
+					stackLabels: {
+						enabled: true,
+						format: '{total:.2f}'
+					}
+				},
+				tooltip: {
+					pointFormat: '<span style="color:{point.color}">\u25CF {series.name}:</span> {point.y:.2f} W<br/><b>Tổng cộng: </b>{point.stackTotal:.2f}',
+					headerFormat: 'Thời gian: {point.key}<br>',
+				},
+				plotOptions: {
+					column: {
+						stacking: 'normal',
+						dataLabels: {
+							enabled: true,
+							formatter: function () {
+								if (this.y > 0.5)
+									return Math.ceil(this.y * 10) / 10;
+							}
+						}
+					}
+				},
+				series: []
 			});
 		}, 50);
 	});
