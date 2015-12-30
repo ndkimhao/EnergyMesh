@@ -1,42 +1,6 @@
 <link rel="stylesheet" type="text/css" href="css/dashboard/statistic.css">
 
 <div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div id="pieChart" class="col-md-5 col-md-offset-1 realtime-pie-chart-container"></div>
-		<div class="col-md-5">
-			<div class="ibox detail-data">
-				<div class="ibox-title">
-					<h5>Dữ liệu chi tiết</h5>
-				</div>
-				<div class="ibox-content">
-
-					<table class="footable table toggle-arrow-tiny table-no-stripe" data-page-size="8">
-						<thead>
-						<tr>
-							<th>Thiết bị</th>
-							<th>Công suất</th>
-							<th>Tiêu thụ (th)</th>
-							<th>Thành tiền</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr ng-repeat="dev in detailDevice">
-							<td>
-								<img src="{{dev.category.image}}"
-								     alt="{{dev.category.name}}" class="dev-cat-image">
-								{{dev.name}}
-							</td>
-							<td>{{dev.power | number:2}} W</td>
-							<td>{{dev.kwh | number:2}} kWh</td>
-							<td>{{dev.money | number:0}}</td>
-						</tr>
-						</tbody>
-					</table>
-
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<div class="row">
 
@@ -99,6 +63,44 @@
 
 	<div class="gutter"></div>
 
+	<div class="row">
+		<div id="pieChart" class="col-md-5 col-md-offset-1 pie-chart-container"></div>
+		<div class="col-md-5">
+			<div class="ibox detail-data">
+				<div class="ibox-title">
+					<h5>Dữ liệu chi tiết</h5>
+				</div>
+				<div class="ibox-content">
+
+					<table class="footable table toggle-arrow-tiny table-no-stripe" data-page-size="8">
+						<thead>
+						<tr>
+							<th data-toggle="true">Thiết bị</th>
+							<th>Tiêu thụ</th>
+							<th>Thành tiền</th>
+							<th data-hide="all">Tiền hàng tháng</th>
+							<th data-hide="all">Tiền hàng năm</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="elem in detailDevice">
+							<td>
+								<img src="{{elem.dev.category.image}}"
+								     alt="{{elem.dev.category.name}}" class="dev-cat-image">
+								{{elem.dev.name}}
+							</td>
+							<td>{{elem.totalWork | number:2}} kWh</td>
+							<td>{{elem.money | number:0}} đ</td>
+							<td>{{elem.moneyMonthly | number:0}} đ</td>
+							<td>{{elem.moneyYearly | number:0}} đ</td>
+						</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="gutter"></div>
 </div>

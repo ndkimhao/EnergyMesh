@@ -165,8 +165,8 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 									detailDevice.push({
 										name: dev.name,
 										power: power,
-										kwh: power * 5,
-										money: 17000,
+										//kwh: power * 5,
+										//money: 17000,
 										category: dev.category
 									});
 									remainPower -= power;

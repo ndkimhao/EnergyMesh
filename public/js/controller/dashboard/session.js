@@ -6,7 +6,7 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
                                                   $em, cfpLoadingBar, $sessionSvc) {
 	$('.footable').footable();
 	$scope.$watchCollection('sessionData', function () {
-		$timeout(function () {
+		setTimeout(function () {
 			$('.footable').trigger('footable_redraw');
 		});
 	});

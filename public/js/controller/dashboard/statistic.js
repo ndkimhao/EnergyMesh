@@ -32,6 +32,9 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 					pieChart.series[0].data.forEach(function (elem) {
 						elem.update([0, 0], false);
 					});
+					$.each(deviceData, function (id, elem) {
+						elem.detail.totalWork = 0;
+					});
 					var overallTotal = [];
 					data.forEach(function (elem) {
 						var time = new Date(elem.start).getTime();
@@ -60,6 +63,7 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 							seriesHourly.data[hour].update([hour,
 								seriesHourly.data[hour].y + work], false);
 							pie.update([0, pie.y + work], false);
+							devCusObj.detail.totalWork += work;
 
 							time += gap;
 					});
@@ -70,6 +74,12 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 					overallChart.redraw();
 					hourlyChart.redraw();
 					pieChart.redraw();
+					$scope.detailDevice.forEach(function (elem) {
+						elem.money = elem.totalWork * 1750;
+						var dur = ($scope.search.end.getTime() - $scope.search.start.getTime()) / 1000;
+						elem.moneyMonthly = (elem.money / dur) * (60 * 60 * 24 * 30);
+						elem.moneyYearly = (elem.money / dur) * (60 * 60 * 24 * 30 * 12);
+				});
 				});
 	};
 
@@ -101,6 +111,7 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 				var count = 1;
 				var colors = Highcharts.getOptions().colors;
 				var arrPieData = [];
+				$scope.detailDevice = [];
 				$sessionSvc.deviceData.forEach(function (elem) {
 					var devDat = deviceData[elem.id] = {
 						obj: elem,
@@ -123,9 +134,17 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 							y: 0,
 							color: colors[count]
 						},
+						detail: {
+							dev: elem,
+							totalWork: 0,
+							money: 0,
+							moneyMonthly: 0,
+							moneyYearly: 0
+						},
 						color: colors[count++]
 					};
 					arrPieData.push(devDat.pie);
+					$scope.detailDevice.push(devDat.detail);
 			});
 				hourlyChart.redraw();
 				pieChart.series[0].setData(arrPieData);
@@ -268,5 +287,12 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 				}]
 			});
 		}, 50);
+
+		$('.footable').footable();
+		$scope.$watchCollection('detailDevice', function () {
+			setTimeout(function () {
+				$('.footable').trigger('footable_redraw');
+			});
+		});
 	});
 });

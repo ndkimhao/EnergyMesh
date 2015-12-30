@@ -9,3 +9,23 @@ div.overall-chart-container {
 div.hourly-chart-container {
 	height: 500px;
 }
+
+div.pie-chart-container {
+	height: 400px;
+}
+
+@media (min-width: 992px) {
+	.detail-data {
+		padding-left: 20px;
+		width: 107.5%;
+	}
+}
+
+.table-no-stripe tr.footable-odd {
+	background: #ffffff;
+}
+
+img.dev-cat-image {
+	max-height: 25px;
+	max-width: 100%;
+}
