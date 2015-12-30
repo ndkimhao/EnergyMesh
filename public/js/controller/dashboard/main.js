@@ -55,7 +55,8 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 				events: {
 					load: function () {
 						realtimeChart = this;
-						finishChartCallback[0]();
+						if (finishChartCallback[0]) finishChartCallback[0]();
+						finishChartCallback[0] = null;
 					}
 				}
 			},
@@ -94,7 +95,8 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 				events: {
 					load: function () {
 						realtimePie = this;
-						finishChartCallback[1]();
+						if (finishChartCallback[1])finishChartCallback[1]();
+						finishChartCallback[1] = null;
 					}
 				}
 			},
@@ -183,20 +185,17 @@ app.controller('Dashboard.MainCtrl', function ($rootScope, $scope, $timeout, $so
 					$scope.detailDevice = detailDevice;
 					$scope.$digest();
 
-					//realtimePie.redraw();
 					realtimePie.series[0].setData(pieData);
 					realtimeChart.redraw();
-
 				}
 			});
 			$socket.io.emit('start data');
 		});
 	});
 	$(function () {
-		$timeout(function () {
-			if (realtimeChart) {
-				realtimeChart.reflow();
-			}
+		setTimeout(function () {
+			if (realtimeChart) realtimeChart.reflow();
+			if (realtimePie) realtimePie.reflow();
 		}, 50);
 	});
 

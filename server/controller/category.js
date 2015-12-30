@@ -43,24 +43,32 @@ router
 		});
 	})
 	.put(function (req, res) {
-		Category.findById(req.params.id, function (err, cat) {
-			if (handle.general(err, res, cat)) {
-				if (req.body.name) {
-					cat.name = req.body.name;
-					cat.save(handle.lastHandle(res));
+		if (req.body.name) {
+			Category.findById(req.params.id, function (err, cat) {
+				if (handle.general(err, res, cat)) {
+					if (req.body.name) {
+						cat.name = req.body.name;
+						cat.save(handle.lastHandle(res));
+					}
 				}
-			}
-		});
+			});
+		} else {
+			handle.error(res);
+		}
 	});
 
 router
 	.route('/')
 	.post(function (req, res) {
 		if (req.body.name) {
-			var cat = new Category({
-				name: req.body.name
-			});
-			cat.save(handle.lastHandle(res, cat.clientData));
+			if (req.body.name) {
+				var cat = new Category({
+					name: req.body.name
+				});
+				cat.save(handle.lastHandle(res, cat.clientData));
+			}
+		} else {
+			handle.error(res);
 		}
 	})
 	.get(function (req, res) {

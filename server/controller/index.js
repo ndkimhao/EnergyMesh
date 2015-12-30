@@ -21,5 +21,6 @@ exports.init = function (app) {
 	app.use('/api/category/', require('./category'));
 	app.use('/api/device/', require('./device'));
 	app.use('/api/session/', require('./session'));
+	app.use('/api/statistic/', require('./statistic'));
 	app.use('/api/', notFound);
 }

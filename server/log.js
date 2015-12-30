@@ -4,12 +4,11 @@
 
 var config = require('./config');
 var colors = require('colors/safe');
-var _ = require('lodash');
+var lodash = require('lodash');
+var util = require('util');
 
 var formatRegExp = /%[sdj]/g;
 function format(f) {
-	var util = require('util');
-
 	if (typeof f !== 'string') {
 		var objects = [];
 		for (var i = 0; i < arguments.length; i++) {
@@ -82,7 +81,7 @@ exports.m = exports.message = function () {
 };
 
 exports.t = exports.trace = function () {
-	arguments = _.toArray(arguments);
+	arguments = lodash.toArray(arguments);
 	arguments.unshift('__');
 	_log(colors.trace, arguments);
 };

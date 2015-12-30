@@ -24,10 +24,11 @@ router.post('/push', function (req, res) {
 	var data = req.body;
 	var obj;
 	if (!tmpData[data.id]) {
-		obj = tmpData[data.id] = {};
-		obj.id = data.id;
-		obj.data = [];
-		obj.tmpData = null;
+		obj = tmpData[data.id] = {
+			id: data.id,
+			data: [],
+			tmpData: null
+		};
 		checkSessionMeta(obj.id);
 	} else {
 		obj = tmpData[data.id];
@@ -83,15 +84,15 @@ function checkSessionMeta(sId) {
 	});
 }
 
+// TODO: use native update method
 function findSession(sId, callback) {
 	Session.findOne({
 		sessionId: sId,
 		lastRecord: {
-			"$gte": moment().add(-config.realtime.collectTime * 2).toDate(),
-			"$lt": new Date()
+			'$gte': moment().add(-config.realtime.collectTime * 2, 'ms').toDate()
 		},
 		start: {
-			"$gte": moment().add(-config.realtime.chunkTime).toDate()
+			'$gte': moment().add(-config.realtime.chunkTime, 'ms').toDate()
 		}
 	}, function (err, sess) {
 		if (!err) {
@@ -99,9 +100,13 @@ function findSession(sId, callback) {
 			if (sess) {
 				s = sess;
 			} else {
+				// TODO: set device property if exist
+				var gap = config.realtime.collectTime;
+				var start = Math.round(Date.now() / gap) * gap;
 				s = new Session({
 					sessionId: sId,
-					gap: config.realtime.collectTime
+					gap: gap,
+					start: start
 				});
 				checkSessionMeta(sId);
 			}

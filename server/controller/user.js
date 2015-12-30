@@ -6,6 +6,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 
+// TODO: hash password
 router.post('/login', passport.authenticate('local', {
 	session: true
 }), function (req, res) {

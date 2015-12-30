@@ -11,7 +11,7 @@ var model = require('../model');
 var Session = model.Session;
 var SessionMeta = model.SessionMeta;
 
-// TODO: get only leastest session data
+// TODO: get only latest session data
 router
 		.route('/')
 		.get(function (req, res) {
@@ -21,25 +21,25 @@ router
 						return sess.clientData;
 					}));
 				}
-			});
+		});
 		});
 
 router
 		.route('/:id')
 		.put(function (req, res) {
 			if (req.body.device) {
-				SessionMeta.findById(req.params.id, function (err, sess) {
-					if (handle.general(err, res, sess)) {
-						var devId = req.body.device.id;
-						sess.device = devId;
-						sess.save();
-						Session.update({
-							sessionId: sess.sessionId
-						}, {
-							$set: {device: devId}
-						}, {
-							multi: true
-						}, handle.lastHandle(res));
+			SessionMeta.findById(req.params.id, function (err, sess) {
+				if (handle.general(err, res, sess)) {
+					var devId = req.body.device.id;
+					sess.device = devId;
+					sess.save();
+					Session.update({
+						sessionId: sess.sessionId
+					}, {
+						$set: {device: devId}
+					}, {
+						multi: true
+					}, handle.lastHandle(res));
 				}
 			});
 			}
@@ -52,7 +52,7 @@ router
 					}, handle.lastHandle(res));
 					sess.remove();
 				}
-			});
+		});
 		});
 
 module.exports = router;

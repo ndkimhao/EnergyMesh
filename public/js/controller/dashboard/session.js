@@ -12,10 +12,10 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 	});
 
 	$scope.defaultNewDev = $sessionSvc.defaultNewDev;
-	var loadSessionData = function () {
+	var loadSessionData = function (forceLoad) {
 		var tmpSessData;
 		var oldData = $scope.sessionData;
-		$sessionSvc.firstLoad(function () {
+		$sessionSvc[forceLoad ? 'load' : 'firstLoad'](function () {
 			if (oldData) {
 				$sessionSvc.data.forEach(function (sess) {
 					if (!oldData.find(function (elem) {
@@ -34,7 +34,7 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 
 	$scope.refresh = function () {
 		cfpLoadingBar.start();
-		loadSessionData();
+		loadSessionData(true);
 		cfpLoadingBar.complete();
 		$em.tInfo('Làm mới dữ liệu thành công !', 2);
 	};
@@ -70,9 +70,10 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 	}
 
 	$scope.update = function (sess) {
+		// TODO test duplicae detector
 		var allow = true;
 		if (sess.newDev.id) {
-			// TODO bind to chunkTime
+			// TODO bind to config.chunkTime
 			var t_start = +sess.start;
 			var t_end = +sess.end - (30 * 60 * 1000);
 			var now = new Date().getTime();

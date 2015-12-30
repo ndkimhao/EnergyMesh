@@ -25,19 +25,21 @@ router
 			});
 	})
 	.post(function (req, res) {
-		if (req.body.name) {
+		if (req.body.name && req.body.category.id) {
 			var dev = new Device({
 				name: req.body.name,
 				category: req.body.category.id
 			});
 			dev.save(handle.lastHandle(res));
+		} else {
+			handle.error(res);
 		}
 	});
 
 router
 	.route('/:id')
 	.put(function (req, res) {
-		if (req.body.name) {
+		if (req.body.name && req.body.category.id) {
 			Device.findById(req.params.id, function (err, dev) {
 				if (handle.general(err, res, dev)) {
 					dev.name = req.body.name;
@@ -45,6 +47,8 @@ router
 					dev.save(handle.lastHandle(res));
 				}
 			});
+		} else {
+			handle.error(res);
 		}
 	})
 	// TODO: Delete all assoiated data

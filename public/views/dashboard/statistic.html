@@ -1,12 +1,62 @@
+<link rel="stylesheet" type="text/css" href="css/dashboard/statistic.css">
+
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
-		<div class="col-lg-12">
-			<div class="text-center m-t-lg">
-				<h1>
-					Simple example of second view
-				</h1>
-				<small>Configure in config.js as minor state.</small>
+
+		<div class="col-md-5 col-md-offset-1">
+			<div class="dropdown">
+				<a class="dropdown-toggle" id="dropStart" role="button" data-toggle="dropdown">
+					<div class="input-group">
+						<span class="input-group-addon">Từ</span>
+						<input type="text" class="form-control"
+						       value="{{makeTimeCalendar(search.start)}}">
+						<span class="input-group-addon">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</span>
+					</div>
+				</a>
+				<ul class="dropdown-menu" role="menu">
+					<datetimepicker data-ng-model="search.start"
+					                data-datetimepicker-config="{ dropdownSelector: '#dropStart' }">
+				</ul>
 			</div>
+		</div>
+
+		<div class="col-md-5">
+			<div class="dropdown">
+				<a class="dropdown-toggle" id="dropEnd" role="button" data-toggle="dropdown">
+					<div class="input-group">
+						<span class="input-group-addon">Đến</span>
+						<input type="text" class="form-control"
+						       value="{{makeTimeCalendar(search.end)}}">
+						<span class="input-group-addon">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</span>
+					</div>
+				</a>
+				<ul class="dropdown-menu" role="menu">
+					<datetimepicker data-ng-model="search.end"
+					                data-datetimepicker-config="{ dropdownSelector: '#dropEnd' }">
+				</ul>
+			</div>
+		</div>
+
+		<div class="col-all-1">
+			<button class="btn btn-primary dim btn-nofocus m-l-sm" type="button" ng-click="refresh()">
+				<i class="fa fa-refresh"></i>
+			</button>
+		</div>
+
+	</div>
+
+
+	<div class="row">
+		<div id="overallChart" class="col-md-10 col-md-offset-1 realtime-chart-container"></div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-8 col-centered">
 		</div>
 	</div>
 </div>

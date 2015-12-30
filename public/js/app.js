@@ -4,7 +4,8 @@
 
 app = angular.module('energyMeshApp',
 		['ui.router', 'angular-loading-bar', 'ui.bootstrap', 'ngCookies',
-			'toaster', 'ngAnimate', 'ngFileUpload', 'ngSanitize', 'cfp.loadingBar']);
+			'toaster', 'ngAnimate', 'ngFileUpload', 'ngSanitize', 'cfp.loadingBar',
+			'ui.bootstrap.datetimepicker']);
 
 app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpLoadingBarProvider) {
 	"use strict";
@@ -64,5 +65,26 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 			useUTC: false
 		}
 	});
-	moment.defineLocale('vi', {longDateFormat: {LT: 'hh:mm A'}});
+	moment.defineLocale('vi', {
+		longDateFormat: {
+			LT: 'hh:mm A',
+			LTS: 'hh:mm:ss A',
+			L: 'DD/MM/YYYY',
+			LL: 'D MMMM [năm] YYYY',
+			LLL: 'D MMMM [năm] YYYY HH:mm',
+			LLLL: 'dddd, D MMMM [năm] YYYY HH:mm',
+			l: 'DD/M/YYYY',
+			ll: 'D MMM YYYY',
+			lll: 'D MMM YYYY HH:mm',
+			llll: 'ddd, D MMM YYYY HH:mm'
+		},
+		calendar: {
+			sameDay: '[Hôm nay lúc] LT',
+			nextDay: '[Ngày mai lúc] LT',
+			nextWeek: 'dddd [tuần tới lúc] LT',
+			lastDay: '[Hôm qua lúc] LT',
+			lastWeek: 'dddd [tuần rồi lúc] LT',
+			sameElse: 'L [lúc] LT'
+		}
+	});
 });
