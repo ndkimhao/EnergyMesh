@@ -29,12 +29,16 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 							return ret;
 						}());
 					});
+					pieChart.series[0].data.forEach(function (elem) {
+						elem.update([0, 0], false);
+					});
 					var overallTotal = [];
 					data.forEach(function (elem) {
 						var time = new Date(elem.start).getTime();
 						var devCusObj = deviceData[sessionData[elem.sessionId].device.id];
 						var seriesOverall = devCusObj.seriesOverall;
 						var seriesHourly = devCusObj.seriesHourly;
+						var pie = devCusObj.pie;
 						var gap = elem.gap;
 						var kwhFactor = (gap / (1000 * 60 * 60));
 
@@ -55,6 +59,7 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 							var work = dat * kwhFactor;
 							seriesHourly.data[hour].update([hour,
 								seriesHourly.data[hour].y + work], false);
+							pie.update([0, pie.y + work], false);
 
 							time += gap;
 					});
@@ -64,12 +69,13 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 					overallChart.series[0].setData(overallTotal);
 					overallChart.redraw();
 					hourlyChart.redraw();
+					pieChart.redraw();
 				});
 	};
 
 	var sessionData, deviceData;
-	var overallChart, hourlyChart;
-	var finishChartCallback = [null, null];
+	var overallChart, hourlyChart, pieChart;
+	var finishChartCallback = [null, null, null];
 	async.parallel(
 			[
 				function (callback) {
@@ -77,6 +83,9 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 				},
 				function (callback) {
 					finishChartCallback[1] = callback;
+				},
+				function (callback) {
+					finishChartCallback[2] = callback;
 				},
 				function (callback) {
 					$sessionSvc.load(function () {
@@ -91,8 +100,9 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 			], function () {
 				var count = 1;
 				var colors = Highcharts.getOptions().colors;
+				var arrPieData = [];
 				$sessionSvc.deviceData.forEach(function (elem) {
-					deviceData[elem.id] = {
+					var devDat = deviceData[elem.id] = {
 						obj: elem,
 						seriesOverall: overallChart.addSeries({
 							name: elem.name,
@@ -108,10 +118,21 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 								return ret;
 							}()
 						}, false),
+						pie: {
+							name: elem.name,
+							y: 0,
+							color: colors[count]
+						},
 						color: colors[count++]
 					};
+					arrPieData.push(devDat.pie);
 			});
 				hourlyChart.redraw();
+				pieChart.series[0].setData(arrPieData);
+				var i = 0;
+				$.each(deviceData, function (id, elem) {
+					elem.pie = pieChart.series[0].data[i++];
+			});
 			});
 
 	$(function () {
@@ -210,6 +231,41 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 					}
 				},
 				series: []
+			});
+
+			$('#pieChart').highcharts({
+				chart: {
+					type: 'pie',
+					options3d: {
+						enabled: true,
+						alpha: 45
+					},
+					events: {
+						load: function () {
+							pieChart = this;
+							if (finishChartCallback[2])finishChartCallback[2]();
+							finishChartCallback[2] = null;
+						}
+					}
+				},
+				title: {text: 'Tỷ lệ tiêu thụ điện'},
+				tooltip: {
+					headerFormat: '<b>{point.key}: </b>',
+					pointFormat: '{point.y:.2f} kWh ({point.percentage:.2f}%)'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						depth: 35,
+						dataLabels: {enabled: false},
+						showInLegend: true
+					}
+				},
+				series: [{
+					type: 'pie',
+					data: []
+				}]
 			});
 		}, 50);
 	});
