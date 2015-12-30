@@ -2,7 +2,7 @@
  * Created by Nguyen Duong Kim Hao on 23/12/2015.
  */
 
-app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) {
+app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc, cfpLoadingBar, $em) {
 	$scope.search = {
 		start: moment().add(-2, 'days').startOf('hour').toDate(),
 		end: new Date()
@@ -13,9 +13,11 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 	};
 
 	$scope.refresh = function () {
+		cfpLoadingBar.start();
 		$http
 				.post('/api/statistic/all', $scope.search)
 				.success(function (data) {
+					cfpLoadingBar.inc();
 					//console.log(data);
 					overallChart.series.forEach(function (elem) {
 						elem.setData([]);
@@ -35,6 +37,7 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 					$.each(deviceData, function (id, elem) {
 						elem.detail.totalWork = 0;
 					});
+					cfpLoadingBar.inc();
 					var overallTotal = [];
 					data.forEach(function (elem) {
 						var time = new Date(elem.start).getTime();
@@ -70,6 +73,7 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 						seriesOverall.addPoint([time + 1, null], false);
 						overallTotal.push([time + 1, null]);
 				});
+					cfpLoadingBar.inc();
 					overallChart.series[0].setData(overallTotal);
 					overallChart.redraw();
 					hourlyChart.redraw();
@@ -78,8 +82,11 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc) 
 						elem.money = elem.totalWork * 1750;
 						var dur = ($scope.search.end.getTime() - $scope.search.start.getTime()) / 1000;
 						elem.moneyMonthly = (elem.money / dur) * (60 * 60 * 24 * 30);
-						elem.moneyYearly = (elem.money / dur) * (60 * 60 * 24 * 30 * 12);
+						elem.moneyYearly = elem.moneyMonthly * 12;
 				});
+
+					cfpLoadingBar.complete();
+					$em.tInfo('Thống kê dữ liệu thành công !', 2);
 				});
 	};
 
