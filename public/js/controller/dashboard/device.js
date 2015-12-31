@@ -2,7 +2,7 @@
  * Created by Nguyen Duong Kim Hao on 18/12/2015.
  */
 
-app.controller('Dashboard.DeviceCtrl', function ($rootScope, $scope, $http, $em,
+app.controller('Dashboard.DeviceCtrl', function ($scope, $http, $em,
                                                  Upload, $timeout, $categorySvc, $deviceSvc) {
 	$scope.clearNewDev = function () {
 		$scope.devNew = {

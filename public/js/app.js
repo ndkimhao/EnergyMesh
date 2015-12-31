@@ -55,6 +55,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, cfpL
 				templateUrl: './views/dashboard/statistic.html',
 				controller: 'Dashboard.StatisticCtrl',
 				data: {pageTitle: 'Thống kê'}
+			})
+			.state('dashboard.control', {
+				url: '/control',
+				templateUrl: './views/dashboard/control.html',
+				controller: 'Dashboard.ControlCtrl',
+				data: {pageTitle: 'Điều khiển thiết bị'}
 		});
 	$urlRouterProvider.when('/dashboard', '/dashboard/main');
 
