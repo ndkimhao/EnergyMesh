@@ -37,7 +37,8 @@ router
 	});
 
 router
-		.get('/control', function (req, res) {
+		.route('/control')
+		.get(function (req, res) {
 			Device
 					.find({
 						ctrlCode: {$ne: ''}
@@ -50,6 +51,21 @@ router
 							}));
 						}
 					});
+		});
+
+router
+		.route('/control/:id')
+		.post(function (req, res) {
+			if (req.body.isOn !== undefined) {
+				Device.findById(req.params.id, function (err, dev) {
+					if (handle.general(err, res, dev)) {
+						dev.isOn = req.body.isOn;
+						dev.save(handle.lastHandle(res));
+					}
+				});
+			} else {
+				handle.error(res);
+			}
 		});
 
 router
