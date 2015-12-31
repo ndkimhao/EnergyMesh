@@ -29,8 +29,13 @@ img.cat-select {
 	max-width: 100%;
 }
 
-td.dev-name > input[type=text] {
+td.dev-name > div {
 	margin-left: 20px;
+}
+
+td.dev-ctrl-code {
+	vertical-align: middle !important;
+	font-weight: 600;
 }
 
 .dropdown-menu {
@@ -44,7 +49,8 @@ td.dev-name > input[type=text] {
 }
 
 .has-warning .btn,
-.has-warning .btn:focus {
+.has-warning .btn:focus,
+.has-warning-btn, .has-warning-btn:focus {
 	border-color: #f8ac59 !important;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }

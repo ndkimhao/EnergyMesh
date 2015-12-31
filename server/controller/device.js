@@ -37,13 +37,30 @@ router
 	});
 
 router
+		.get('/control', function (req, res) {
+			Device
+					.find({
+						ctrlCode: {$ne: ''}
+					})
+					.populate('category', 'name image')
+					.exec(function (err, arr) {
+						if (handle.general(err, res, arr)) {
+							res.json(arr.map(function (dev) {
+								return dev.clientData;
+							}));
+						}
+					});
+		});
+
+router
 	.route('/:id')
 	.put(function (req, res) {
-		if (req.body.name && req.body.category.id) {
+		if (req.body.name && req.body.category.id && req.body.ctrlCode !== undefined) {
 			Device.findById(req.params.id, function (err, dev) {
 				if (handle.general(err, res, dev)) {
 					dev.name = req.body.name;
 					dev.category = req.body.category.id;
+					dev.ctrlCode = req.body.ctrlCode;
 					dev.save(handle.lastHandle(res));
 				}
 			});

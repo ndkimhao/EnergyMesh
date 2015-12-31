@@ -18,14 +18,14 @@
 							<th data-toggle="true">Tên</th>
 							<th data-sort-ignore="true" class="cat-select" data-hide="phone">Loại</th>
 							<th data-sort-ignore="true" class="dev-action">Hành động</th>
-							<th data-hide="all">Thông tin thiết bị</th>
+							<th data-hide="all">Mã điều khiển tắt mở</th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr ng-repeat="dev in deviceData">
 							<td data-value="{{dev.$new.name}}" class="dev-name"
 							    ng-class="{'has-warning': dev.name != dev.$new.name}">
-								<div style="margin-left: 20px">
+								<div>
 									<input type="text" placeholder="Tên thiết bị"
 									       class="form-control" ng-model="dev.$new.name">
 								</div>
@@ -67,9 +67,11 @@
 									<i class="fa fa-remove text-danger"></i>
 								</a>
 							</td>
-							<td>
+							<td data-value="{{dev.$new.ctrlCode}}" class="dev-ctrl-code">
 								<div>
-									<h1>Test</h1>
+									<input type="text" placeholder="Mã điều khiển"
+									       class="form-control" ng-model="dev.$new.ctrlCode"
+									       ng-class="{'has-warning-btn': dev.ctrlCode != dev.$new.ctrlCode}">
 								</div>
 							</td>
 						</tr>

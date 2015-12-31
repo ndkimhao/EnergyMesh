@@ -17,6 +17,16 @@ var deviceSchema = exports.userSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		required: true,
 		ref: 'Category'
+	},
+
+	ctrlCode: {
+		type: String,
+		default: ''
+	},
+
+	isOn: {
+		type: Boolean,
+		default: false
 	}
 
 });
@@ -26,7 +36,9 @@ deviceSchema.virtual('clientData')
 		return {
 			id: this._id,
 			name: this.name,
-			category: this.category.clientData
+			category: this.category.clientData || this.category,
+			ctrlCode: this.ctrlCode,
+			isOn: this.isOn
 		}
 	});
 
