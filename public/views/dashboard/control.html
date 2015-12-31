@@ -1,14 +1,37 @@
 <link rel="stylesheet" type="text/css" href="css/dashboard/control.css">
+<toaster-container></toaster-container>
 
 <div class="wrapper wrapper-content animated fadeInRight">
+
+
 	<div class="row">
-		<div class="col-lg-12">
-			<div class="text-center m-t-lg">
-				<h1>
-					Simple example of second view
-				</h1>
-				<small>Configure in config.js as minor state.</small>
+		<div class="col-md-3" ng-repeat="dev in controllableDevice">
+			<div class="ibox">
+				<div class="ibox-content product-box">
+
+					<div class="product-imitation cat-image">
+						<img src="{{dev.category.image}}"
+						     alt="{{dev.category.name}}" class="cat-image">
+					</div>
+					<div class="product-desc">
+                        <span class="product-price"
+                              ng-class="{'dev-off': !dev.isOn, 'dev-on': dev.isOn}">
+	                        <span ng-show="!dev.isOn">TẮT</span>
+							<span ng-show="dev.isOn">BẬT</span>
+                        </span>
+						<a class="product-name">{{dev.name}}</a>
+
+						<button type="button" class="btn btn-w-m btn-control-dev"
+						        ng-class="{'btn-primary': !dev.isOn, 'btn-danger': dev.isOn}"
+						        ng-click="turnDevice(dev)">
+							<span ng-show="!dev.isOn">Bật thiết bị</span>
+							<span ng-show="dev.isOn">Tắt thiết bị</span>
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+
+
 </div>

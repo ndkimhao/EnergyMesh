@@ -125,6 +125,16 @@ app.factory('$deviceSvc', function ($http, $categorySvc) {
 				});
 				callback(devData, catData);
 			});
+		},
+		getControllableDevice: function (callback) {
+			var _this = this;
+			this.firstLoad(function () {
+				var ret = [];
+				_this.data.forEach(function (elem) {
+					if (elem.ctrlCode != '') ret.push(elem);
+				});
+				callback(ret);
+			});
 		}
 	}
 });
