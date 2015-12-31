@@ -46,7 +46,7 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc, 
 						var seriesHourly = devCusObj.seriesHourly;
 						var pie = devCusObj.pie;
 						var gap = elem.gap;
-						var kwhFactor = (gap / (1000 * 60 * 60));
+						var kwhFactor = (gap / (1000 * 60 * 60) / 1000);
 
 						elem.data.forEach(function (dat) {
 							seriesOverall.addPoint([time, dat], false);
@@ -241,7 +241,7 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc, 
 					}
 				},
 				tooltip: {
-					pointFormat: '<span style="color:{point.color}">\u25CF {series.name}:</span> {point.y:.2f} W<br/><b>Tổng cộng: </b>{point.stackTotal:.2f}',
+					pointFormat: '<span style="color:{point.color}">\u25CF {series.name}:</span> {point.y:.4f} kWh<br/><b>Tổng cộng: </b>{point.stackTotal:.4f} kWh',
 					headerFormat: 'Thời gian: {point.key}<br>',
 				},
 				plotOptions: {
@@ -277,7 +277,7 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc, 
 				title: {text: 'Tỷ lệ tiêu thụ điện'},
 				tooltip: {
 					headerFormat: '<b>{point.key}: </b>',
-					pointFormat: '{point.y:.2f} kWh ({point.percentage:.2f}%)'
+					pointFormat: '{point.y:.4f} kWh ({point.percentage:.2f}%)'
 				},
 				plotOptions: {
 					pie: {
