@@ -9,6 +9,7 @@ var log = require('../log');
 
 var model = require('../model');
 var Device = model.Device;
+var realtime = require('./realtime');
 
 router
 	.route('/')
@@ -61,6 +62,7 @@ router
 					if (handle.general(err, res, dev)) {
 						dev.isOn = req.body.isOn;
 						dev.save(handle.lastHandle(res));
+						realtime.addDeviceStatus(dev.ctrlCode, dev.isOn);
 					}
 				});
 			} else {

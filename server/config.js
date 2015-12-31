@@ -29,7 +29,8 @@ function getConfig() {
 		realtime: {
 			minGap: ms('1 seconds'),
 			collectTime: ms('10 seconds'),
-			chunkTime: ms('30 minutes')
+			chunkTime: ms('30 minutes'),
+			deviceStatusTTL: 5
 		}
 	};
 }

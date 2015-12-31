@@ -12,14 +12,48 @@ var config = require('../config');
 var model = require('../model');
 var moment = require('moment');
 var lodash = require('lodash');
-var SessionMeta, Session;
+var SessionMeta, Session, Device;
 
 var io;
 var tmpData = {};
 var requestingDataClient = [];
 
+var deviceStatus = [];
+
+exports.addDeviceStatus = function (ctrlCode, isOn) {
+	lodash.remove(deviceStatus, function (elem) {
+		return elem.ctrlCode == ctrlCode;
+	});
+	deviceStatus.push({
+		ctrlCode: ctrlCode,
+		isOn: isOn,
+		ttl: config.realtime.deviceStatusTTL
+	});
+};
+
 router.post('/push', function (req, res) {
-	handle.success(res);
+	if (req.body.devStatus) {
+		req.body.devStatus.forEach(function (elem) {
+			Device.update({
+				ctrlCode: elem.ctrlCode
+			}, {
+				$set: {isOn: elem.isOn}
+			}, {
+				multi: true
+			}, function () {
+			});
+			lodash.remove(deviceStatus, function (elem1) {
+				return elem.ctrlCode == elem1.ctrlCode;
+			});
+		});
+
+	}
+
+	res.json(deviceStatus);
+	lodash.remove(deviceStatus, function (elem) {
+		elem.ttl--;
+		return elem.ttl <= 0;
+	});
 
 	var data = req.body;
 	var obj;
@@ -164,5 +198,6 @@ exports.initSocket = function () {
 
 	SessionMeta = model.SessionMeta;
 	Session = model.Session;
+	Device = model.Device;
 	setInterval(collectData, config.realtime.collectTime);
 };

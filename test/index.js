@@ -105,9 +105,13 @@ var changeTime = ct = start = function (randomD, newTime) {
 						method: "POST",
 						json: {
 							id: elem.id,
-							power: power
+							power: power,
+							devStatus: [{ctrlCode: '0100', isOn: true}]
 						}
-					}, function () {
+					}, function (err, data, body) {
+						if (body && body.length > 0) {
+							console.log(body);
+						}
 					});
 				} catch (e) {
 					console.err(e);
