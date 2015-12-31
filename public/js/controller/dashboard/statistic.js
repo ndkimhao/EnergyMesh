@@ -134,7 +134,8 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc, 
 									ret.push(0);
 								}
 								return ret;
-							}()
+							}(),
+							color: colors[count]
 						}, false),
 						pie: {
 							name: elem.name,

@@ -3,18 +3,15 @@ div.cat-image {
 	min-height: 200px;
 }
 
-div.cat-image:before {
-	content: ' ';
-	display: inline-block;
-	vertical-align: middle;
-	height: 100%;
+div.cat-image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 img.cat-image {
 	max-width: 100%;
 	max-height: 200px;
-	display: inline-block;
-	vertical-align: middle;
 }
 
 span.dev-on {
@@ -27,4 +24,19 @@ span.dev-off {
 
 .btn-control-dev {
 	width: 100%;
+}
+
+.btn-refresh-container {
+	direction: rtl;
+	margin-right: 2px;
+}
+
+a.dev-name {
+	min-height: 60px;
+	text-align: center;
+	vertical-align: middle;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

@@ -81,15 +81,17 @@ app.factory('$categorySvc', function ($http) {
 	}
 });
 
-app.factory('$deviceSvc', function ($http, $categorySvc) {
+app.factory('$deviceSvc', function ($http, $categorySvc, cfpLoadingBar) {
 	return {
 		load: function (callback) {
 			var _this = this;
 			$http.get('/api/device').success(function (data) {
+				cfpLoadingBar.inc();
 				data.forEach(function (dev) {
 					dev.$new = $.extend({}, dev);
 				});
 				_this.data = data;
+				cfpLoadingBar.inc();
 				if (callback) callback();
 			});
 		},
@@ -108,12 +110,14 @@ app.factory('$deviceSvc', function ($http, $categorySvc) {
 				function (callback) {
 					$categorySvc.firstLoad(function () {
 						catData = $categorySvc.data;
+						cfpLoadingBar.inc();
 						callback();
 					});
 				},
 				function (callback) {
 					$deviceSvc.firstLoad(function () {
 						devData = $deviceSvc.data;
+						cfpLoadingBar.inc();
 						callback();
 					});
 				}
@@ -123,6 +127,7 @@ app.factory('$deviceSvc', function ($http, $categorySvc) {
 						return cat.id == dev.category.id;
 					});
 				});
+				cfpLoadingBar.inc();
 				callback(devData, catData);
 			});
 		},
@@ -133,6 +138,7 @@ app.factory('$deviceSvc', function ($http, $categorySvc) {
 				_this.data.forEach(function (elem) {
 					if (elem.ctrlCode != '') ret.push(elem);
 				});
+				cfpLoadingBar.inc();
 				callback(ret);
 			});
 		}

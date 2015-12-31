@@ -12,9 +12,9 @@
 						<a class="dropdown-toggle" uib-dropdown-toggle href>
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">User name</strong>
+                                    <strong class="font-bold">admin</strong>
                                 </span>
-                                <span class="text-muted text-xs block">Example menu<b class="caret"></b></span>
+                                <span class="text-muted text-xs block">Hành động<b class="caret"></b></span>
                             </span>
 						</a>
 						<ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -39,15 +39,15 @@
 					</a>
 				</li>
 				<li ui-sref-active="active" class="active">
-					<a ui-sref="dashboard.session">
-						<i class="fa fa-list"></i>
-						<span class="nav-label">Phiên đo</span>
-					</a>
-				</li>
-				<li ui-sref-active="active" class="active">
 					<a ui-sref="dashboard.statistic">
 						<i class="fa fa-bar-chart"></i>
 						<span class="nav-label">Thống kê</span>
+					</a>
+				</li>
+				<li ui-sref-active="active" class="active">
+					<a ui-sref="dashboard.session">
+						<i class="fa fa-list"></i>
+						<span class="nav-label">Phiên đo</span>
 					</a>
 				</li>
 				<li ng-class="{active: $state.is('dashboard.device'),
