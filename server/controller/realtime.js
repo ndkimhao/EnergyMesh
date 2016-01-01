@@ -55,20 +55,23 @@ router.post('/push', function (req, res) {
 		return elem.ttl <= 0;
 	});
 
-	var data = req.body;
-	var obj;
-	if (!tmpData[data.id]) {
-		obj = tmpData[data.id] = {
-			id: data.id,
-			data: [],
-			tmpData: null
-		};
-		checkSessionMeta(obj.id);
-	} else {
-		obj = tmpData[data.id];
+	if (req.body.sensor) {
+		req.body.sensor.forEach(function (data) {
+			var obj;
+			if (!tmpData[data.id]) {
+				obj = tmpData[data.id] = {
+					id: data.id,
+					data: [],
+					tmpData: null
+				};
+				checkSessionMeta(obj.id);
+			} else {
+				obj = tmpData[data.id];
+			}
+			obj.data.push(Math.abs(data.p));
+			sendDataToSocket();
+		});
 	}
-	obj.data.push(data.power);
-	sendDataToSocket();
 });
 exports.router = router;
 
