@@ -20,18 +20,9 @@
 			window.loadingScreenConfig = {
 				logo: 'img/logo/logo.png',
 				backgroundColor: '#f46d3b',
-				loadingHtml: `
-					<div class="loading-message">
-						Xin vui lòng chờ tải ứng dụng...
-					</div>
-					<div class="sk-three-bounce">
-						<div class="sk-child sk-bounce1"></div>
-						<div class="sk-child sk-bounce2"></div>
-						<div class="sk-child sk-bounce3"></div>
-					</div>
-				`
+				loadingHtml: '<div class="loading-message">Xin vui lòng chờ tải ứng dụng...</div><div class="sk-three-bounce"><div class="sk-child sk-bounce1"></div><div class="sk-child sk-bounce2"></div> <div class="sk-child sk-bounce3"></div></div>'
 			};
-			//window.loading_screen = pleaseWait(window.loadingScreenConfig);
+			window.loading_screen = pleaseWait(window.loadingScreenConfig);
 		});
 		$(window).load(function () {
 			if (window.loading_screen) {

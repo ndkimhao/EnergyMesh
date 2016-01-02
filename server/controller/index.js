@@ -3,7 +3,7 @@
  */
 
 var checkUser = function (req, res, next) {
-	// TODO: Enable auth
+	// TODO: (DEV) Enable auth
 	//if (!req.user && req.path != '/user/login') {
 	//	return res.status(401).send('Unauthorized');
 	//}

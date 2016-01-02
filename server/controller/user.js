@@ -10,7 +10,7 @@ var passport = require('passport');
 router.post('/login', passport.authenticate('local', {
 	session: true
 }), function (req, res) {
-	return res.json(req.user.clientData);
+	return res.json(req.user);
 });
 
 router.get('/me', function (req, res, next) {

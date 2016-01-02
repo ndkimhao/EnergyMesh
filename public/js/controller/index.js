@@ -15,7 +15,7 @@ app.controller('HomeCtrl', function ($scope, $cookies, $location, $http) {
 		info: {
 			text: 'Đăng nhập để sử dụng phần mềm',
 			show: true
-		},
+		}
 	};
 
 	$scope.validations = {
@@ -94,6 +94,7 @@ app.controller('HomeCtrl', function ($scope, $cookies, $location, $http) {
 				.success(function (data, status) {
 					if (status == 200) {
 						$cookies.put('user', JSON.stringify(data));
+						console.log(data);
 						showSuccess('Đăng nhập thành công');
 						window.loading_screen = pleaseWait(window.loadingScreenConfig);
 						$location.path('/dashboard');

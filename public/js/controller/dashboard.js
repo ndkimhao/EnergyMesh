@@ -2,7 +2,26 @@
  * Created by Nguyen Duong Kim Hao on 15/12/2015.
  */
 
-app.controller('DashboardCtrl', function ($scope, $cookies, $state, $location, $timeout) {
+app.controller('DashboardCtrl', function ($scope, $cookies, $state, $location, $timeout, $em) {
+	var usrString = $cookies.get('user');
+	if (!usrString) {
+		$location.path('/');
+		return;
+	}
+	$scope.user = JSON.parse(usrString);
+
+	$scope.logout = function () {
+		$em.confirm('Bạn có chắc chắn muốn đăng xuất ?', function () {
+			var cookies = $cookies.getAll();
+			angular.forEach(cookies, function (v, k) {
+				$cookies.remove(k);
+			});
+			$location.path('/');
+			$scope.$apply();
+			$em.success('Đăng xuất thành công !', 2);
+		});
+	};
+
 	//$location.path('/dashboard/main');
 	if (!String.prototype.format) {
 		String.prototype.format = function () {
