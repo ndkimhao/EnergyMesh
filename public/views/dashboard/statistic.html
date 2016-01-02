@@ -5,7 +5,7 @@
 
 	<div class="row">
 
-		<div class="col-md-5 col-md-offset-1">
+		<div class="col-md-5 col-md-offset-1 col-lg-5 col-lg-offset-1 col-sm-5 col-sm-offset-1 col-xs-12">
 			<div class="dropdown">
 				<a class="dropdown-toggle" id="dropStart" role="button" data-toggle="dropdown">
 					<div class="input-group">
@@ -24,7 +24,7 @@
 			</div>
 		</div>
 
-		<div class="col-md-5">
+		<div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
 			<div class="dropdown">
 				<a class="dropdown-toggle" id="dropEnd" role="button" data-toggle="dropdown">
 					<div class="input-group">
@@ -43,7 +43,13 @@
 			</div>
 		</div>
 
-		<div class="col-all-1">
+		<div class="col-all-1 hidden-xs">
+			<button class="btn btn-primary dim btn-nofocus m-l-sm" type="button" ng-click="refresh()">
+				<i class="fa fa-refresh"></i>
+			</button>
+		</div>
+
+		<div class="col-xs-1 visible-xs m-b-md m-t-sm col-xs-offset-9">
 			<button class="btn btn-primary dim btn-nofocus m-l-sm" type="button" ng-click="refresh()">
 				<i class="fa fa-refresh"></i>
 			</button>
@@ -53,20 +59,23 @@
 
 
 	<div class="row">
-		<div id="overallChart" class="col-md-10 col-md-offset-1 overall-chart-container"></div>
+		<div id="overallChart"
+		     class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 overall-chart-container chart-content col-sm-11 col-xs-11"></div>
 	</div>
 
 	<div class="gutter"></div>
 
 	<div class="row">
-		<div id="hourlyChart" class="col-md-10 col-md-offset-1 hourly-chart-container"></div>
+		<div id="hourlyChart"
+		     class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 hourly-chart-container chart-content col-sm-11 col-xs-11"></div>
 	</div>
 
 	<div class="gutter"></div>
 
 	<div class="row">
-		<div id="pieChart" class="col-md-5 col-md-offset-1 pie-chart-container"></div>
-		<div class="col-md-5">
+		<div id="pieChart"
+		     class="col-md-5 col-md-offset-1 col-lg-5 col-lg-offset-1 pie-chart-container chart-content col-sm-11 col-xs-11"></div>
+		<div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
 			<div class="ibox detail-data">
 				<div class="ibox-title">
 					<h5>Dữ liệu chi tiết</h5>

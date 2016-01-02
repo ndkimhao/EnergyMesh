@@ -52,6 +52,13 @@ app.controller('DashboardCtrl', function ($scope, $cookies, $state, $location, $
 			$('body').removeClass('body-small')
 		}
 	});
+	$(function () {
+		if ($(this).width() < 769) {
+			$('body').addClass('body-small')
+		} else {
+			$('body').removeClass('body-small')
+		}
+	});
 
 	$(function () {
 		$('div#div-body-container').mCustomScrollbar({

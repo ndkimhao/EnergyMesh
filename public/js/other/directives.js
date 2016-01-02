@@ -43,6 +43,11 @@ app
 						// Remove all inline style from jquery fadeIn function to reset menu state
 						$('#side-menu').removeAttr('style');
 					}
+					setTimeout(function () {
+						$('.chart-content').each(function () {
+							$(this).highcharts().reflow();
+						});
+					}, 0);
 				}
 			}
 		};

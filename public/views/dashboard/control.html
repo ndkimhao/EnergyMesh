@@ -4,7 +4,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
 
 	<div class="row">
-		<div class="col-md-11 col-centered col-lg-11">
+		<div class="col-md-11 col-centered col-lg-11 col-sm-12 col-xs-12">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
 					<h5>Điều khiển thiết bị
@@ -19,7 +19,7 @@
 				<div class="ibox-content">
 
 					<div class="row">
-						<div class="col-md-3" ng-repeat="dev in controllableDevice">
+						<div class="col-md-3 col-lg-3 col-sm-6 col-xs-12" ng-repeat="dev in controllableDevice">
 							<div class="ibox">
 								<div class="ibox-content product-box">
 									<div class="product-imitation cat-image">
@@ -33,7 +33,10 @@
 											<span ng-show="dev.isOn">BẬT</span>
 				                        </span>
 										<a class="product-name dev-name">
-											<span>{{dev.name}}</span>
+											<span uib-tooltip-placement="top"
+											      uib-tooltip="Mã điều khiển: {{dev.ctrlCode}}">
+												{{dev.name}}
+											</span>
 										</a>
 
 										<button type="button" class="btn btn-w-m btn-control-dev"
