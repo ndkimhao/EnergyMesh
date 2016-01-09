@@ -11,6 +11,14 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 		});
 	});
 
+	var colorMap = {
+		'000': '#A1D490',
+		'201': '#D4A190',
+		'202': '#C390D4',
+		'301': '#913D21',
+		'302': '#752191'
+	};
+
 	$scope.defaultNewDev = $sessionSvc.defaultNewDev;
 	var loadSessionData = function (forceLoad) {
 		var tmpSessData;
@@ -26,8 +34,12 @@ app.controller('Dashboard.SessionCtrl', function ($scope, $http, $timeout, $devi
 					}
 				});
 			}
+			$sessionSvc.data.forEach(function (sess) {
+				sess.color = colorMap[sess.sessionId.substring(0, 3)];
+			});
 			$scope.deviceData = $sessionSvc.deviceData;
 			$scope.sessionData = $sessionSvc.data;
+			//console.log($scope.sessionData);
 		});
 	};
 	loadSessionData();

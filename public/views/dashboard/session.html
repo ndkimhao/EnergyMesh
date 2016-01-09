@@ -47,6 +47,7 @@
 								</span>
 							</td>
 							<td class="dev-select"
+							    ng-style="{'background-color': sess.newDev.id ? 'transparent' : sess.color}"
 							    ng-class="{'has-warning': sess.newDev != sess.device}">
 								<div class="btn-group btn-block" uib-dropdown>
 									<button type="button" uib-dropdown-toggle
