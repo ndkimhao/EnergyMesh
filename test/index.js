@@ -66,7 +66,10 @@ var addSensor = a = function (id, power, range) {
 };
 
 Math.nrand = function () {
-	var x1, x2, rad, y1;
+	var x1,
+			x2,
+			rad,
+			y1;
 	do {
 		x1 = 2 * this.random() - 1;
 		x2 = 2 * this.random() - 1;
@@ -81,8 +84,10 @@ function random(absMax) {
 }
 
 var changeTime = ct = start = function (randomD, newTime) {
-	if (randomD) randomDelay = randomD;
-	if (newTime) interval = newTime;
+	if (randomD)
+		randomDelay = randomD;
+	if (newTime)
+		interval = newTime;
 
 	if (curID) {
 		clearInterval(curID);
@@ -104,9 +109,16 @@ var changeTime = ct = start = function (randomD, newTime) {
 						timeout: 200,
 						method: "POST",
 						json: {
-							id: elem.id,
-							power: power,
-							devStatus: [{ctrlCode: '0100', isOn: true}]
+							sensor: [{
+								id: elem.id,
+								p: power,
+							}
+							],
+							/*devStatus : [{
+							 ctrlCode : '0100',
+							 isOn : true
+							 }
+							 ]*/
 						}
 					}, function (err, data, body) {
 						if (body && body.length > 0) {

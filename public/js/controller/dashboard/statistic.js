@@ -40,8 +40,9 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc, 
 					cfpLoadingBar.inc();
 					var overallTotal = [];
 					data.forEach(function (elem) {
-						var time = new Date(elem.start).getTime();
 						var devCusObj = deviceData[sessionData[elem.sessionId].device.id];
+						if (devCusObj) {
+						var time = new Date(elem.start).getTime();
 						var seriesOverall = devCusObj.seriesOverall;
 						var seriesHourly = devCusObj.seriesHourly;
 						var pie = devCusObj.pie;
@@ -53,7 +54,7 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc, 
 
 							var ot = overallTotal.find(function (e) {
 								return e[0] == time;
-						});
+							});
 							if (!ot) {
 								ot = [time, 0];
 								overallTotal.push(ot);
@@ -69,9 +70,10 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc, 
 							devCusObj.detail.totalWork += work;
 
 							time += gap;
-					});
+						});
 						seriesOverall.addPoint([time + 1, null], false);
 						overallTotal.push([time + 1, null]);
+						}
 				});
 					cfpLoadingBar.inc();
 					overallChart.series[0].setData(overallTotal);
@@ -295,6 +297,30 @@ app.controller('Dashboard.StatisticCtrl', function ($scope, $http, $sessionSvc, 
 				}]
 			});
 		}, 50);
+
+		$scope.$on('$destroy', function () {
+			if (overallChart) {
+				try {
+					overallChart.destroy();
+					overallChart = null;
+				} catch (e) {
+				}
+			}
+			if (hourlyChart) {
+				try {
+					hourlyChart.destroy();
+					hourlyChart = null;
+				} catch (e) {
+				}
+			}
+			if (pieChart) {
+				try {
+					pieChart.destroy();
+					pieChart = null;
+				} catch (e) {
+				}
+			}
+		});
 
 		$('.footable').footable();
 		$scope.$watchCollection('detailDevice', function () {

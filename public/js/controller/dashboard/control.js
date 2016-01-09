@@ -21,13 +21,16 @@ app.controller('Dashboard.ControlCtrl', function ($scope, $deviceSvc, $em, $http
 		});
 	};
 
-	setInterval(function () {
+	var intervalId = setInterval(function () {
 		$deviceSvc.load(function () {
 			$deviceSvc.getControllableDevice(function (data) {
 				$scope.controllableDevice = data;
 			});
 		});
 	}, 5000);
+	$scope.$on('$destroy', function () {
+		clearInterval(intervalId);
+	});
 
 	$scope.turnDevice = function (dev) {
 		dev.isOn = !dev.isOn;
