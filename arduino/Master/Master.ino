@@ -7,7 +7,7 @@
 #include <ArduinoJson.h>
 #include <stdlib.h>
 
-RF24 radio(7, 8);
+RF24 radio(49, 53);
 RF24Network network(radio);
 RF24Mesh mesh(radio, network);
 
