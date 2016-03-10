@@ -7,7 +7,11 @@
 #include <ArduinoJson.h>
 #include <stdlib.h>
 
-RF24 radio(49, 53);
+const byte CS_ETHERNET = 10;
+const byte CE_RF24 = 49;
+const byte CS_RF24 = 53;
+
+RF24 radio(CE_RF24, CS_RF24);
 RF24Network network(radio);
 RF24Mesh mesh(radio, network);
 
@@ -31,10 +35,8 @@ struct payload_mtc_t {
 };
 
 byte mac[] = {  0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-IPAddress server(192, 168, 1, 131);
+IPAddress server(192, 168, 1, 151);
 IPAddress ip(192, 168, 1, 153);
-IPAddress gateway( 192, 168, 1, 100 );
-IPAddress subnet( 255, 255, 255, 0 );
 
 void setup() {
   if (DEBUG) {
@@ -43,6 +45,8 @@ void setup() {
     Serial.println(F("Node ID: 0 (Master)"));
   }
 
+  pinMode(CS_ETHERNET, OUTPUT);
+  digitalWrite(CS_ETHERNET, HIGH);
   Ethernet.begin(mac, ip);
   if (DEBUG) Serial.println("Ethernet setup ok");
 
@@ -56,7 +60,6 @@ void setup() {
     }
     Serial.println(F("========================================\n"));
   }
-
 
   /*   delay(1000);
    Serial.println("connecting...");
@@ -117,8 +120,7 @@ void loop() {
           for (int i = 0; i < 2; i++) {
             if (abs(payload_ts.P[i]) > MIN_P) {
               JsonObject& dat = jsonBuffer.createObject();
-              String sessId = String((uint16_t)payload_ts.from << 24 | (uint16_t)(i + 1) << 16 | (uint16_t)payload_ts.sess[i], HEX);
-              dat["id"] = sessId;
+              dat["id"] = String(String(payload_ts.from) + ":" + String(i + 1) + "." + String(payload_ts.sess[i]));
               dat["u"].set(payload_ts.U, 4);
               dat["i"].set(payload_ts.I[i], 4);
               dat["p"].set(payload_ts.P[i], 4);
@@ -164,6 +166,8 @@ char buf[256];
 EthernetClient client;
 void postData(JsonObject& jsonObject)
 {
+  digitalWrite(CS_RF24, HIGH);
+  digitalWrite(CS_ETHERNET, LOW);
   if (client.connect(server, 80)) {
     client.println("POST /api/realtime/push HTTP/1.1");
     client.println("Host: localhost");
@@ -220,7 +224,7 @@ void postData(JsonObject& jsonObject)
           }
         }
 
-        Serial.println();
+        Serial.println("Post ok!");
         Serial.println();
       }
     }
@@ -228,4 +232,6 @@ void postData(JsonObject& jsonObject)
   } else {
     if (DEBUG) Serial.println("connection failed");
   }
+  digitalWrite(CS_RF24, LOW);
+  digitalWrite(CS_ETHERNET, HIGH);
 }

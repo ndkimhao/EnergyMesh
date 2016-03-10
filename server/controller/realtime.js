@@ -46,7 +46,6 @@ router.post('/push', function (req, res) {
 				return elem.ctrlCode == elem1.ctrlCode;
 			});
 		});
-
 	}
 
 	res.json(deviceStatus);
